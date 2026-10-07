@@ -1,0 +1,2248 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Pengajuan Dosen Pembimbing - Universitas Sembagi Arutala
+  </title>
+
+
+  <style>
+
+    :root {
+      --bg-color: #fcfbf7;
+      --card-bg: #ffffff;
+      --primary: #4a6b5d;
+      --primary-hover: #3b574a;
+      --border: #dcd7cc;
+      --text: #2c302e;
+      --muted: #777777;
+
+      --danger: #b42318;
+      --danger-bg: #fff1f0;
+
+      --success: #216e39;
+      --success-bg: #edf7ef;
+    }
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      font-family:
+        "Segoe UI",
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
+      background-color:
+        var(--bg-color);
+
+      color:
+        var(--text);
+
+      margin: 0;
+
+      padding: 20px;
+
+    }
+
+
+    .container {
+
+      width: 100%;
+
+      max-width: 650px;
+
+      margin: 20px auto;
+
+      background:
+        var(--card-bg);
+
+      padding: 30px;
+
+      border-radius: 12px;
+
+      box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.05);
+
+      border:
+        1px solid var(--border);
+
+    }
+
+
+    h2 {
+
+      text-align: center;
+
+      color:
+        var(--primary);
+
+      margin:
+        0 0 5px;
+
+      font-size:
+        1.5rem;
+
+    }
+
+
+    .subtitle {
+
+      text-align: center;
+
+      font-size:
+        0.9rem;
+
+      color:
+        var(--muted);
+
+      margin:
+        0 0 25px;
+
+      line-height:
+        1.5;
+
+    }
+
+
+    .form-group {
+
+      margin-bottom:
+        18px;
+
+    }
+
+
+    label {
+
+      display:
+        block;
+
+      font-weight:
+        600;
+
+      margin-bottom:
+        6px;
+
+      font-size:
+        0.95rem;
+
+    }
+
+
+    input[type="text"],
+    input[type="file"],
+    textarea,
+    select {
+
+      width:
+        100%;
+
+      padding:
+        10px 12px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        6px;
+
+      background-color:
+        #fafafa;
+
+      color:
+        var(--text);
+
+      font-size:
+        0.95rem;
+
+      font-family:
+        inherit;
+
+    }
+
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+
+      outline:
+        none;
+
+      border-color:
+        var(--primary);
+
+      background-color:
+        #ffffff;
+
+      box-shadow:
+        0 0 0 2px
+        rgba(74, 107, 93, 0.08);
+
+    }
+
+
+    textarea {
+
+      resize:
+        vertical;
+
+      min-height:
+        90px;
+
+    }
+
+
+    input[type="file"] {
+
+      padding:
+        9px;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    select:disabled {
+
+      background:
+        #f2f2f2;
+
+      color:
+        #999;
+
+      cursor:
+        not-allowed;
+
+    }
+
+
+    .file-hint {
+
+      font-size:
+        0.8rem;
+
+      color:
+        var(--muted);
+
+      margin-top:
+        5px;
+
+      line-height:
+        1.4;
+
+    }
+
+
+    .quota-info {
+
+      font-size:
+        0.8rem;
+
+      color:
+        var(--muted);
+
+      margin-top:
+        6px;
+
+      line-height:
+        1.4;
+
+    }
+
+
+    button {
+
+      width:
+        100%;
+
+      background-color:
+        var(--primary);
+
+      color:
+        white;
+
+      padding:
+        12px;
+
+      border:
+        none;
+
+      border-radius:
+        6px;
+
+      font-size:
+        1rem;
+
+      font-weight:
+        bold;
+
+      cursor:
+        pointer;
+
+      transition:
+        background 0.2s ease;
+
+    }
+
+
+    button:hover:not(:disabled) {
+
+      background-color:
+        var(--primary-hover);
+
+    }
+
+
+    button:disabled {
+
+      background:
+        #aaaaaa;
+
+      cursor:
+        not-allowed;
+
+    }
+
+
+    #loading {
+
+      display:
+        none;
+
+      text-align:
+        center;
+
+      font-size:
+        0.9rem;
+
+      color:
+        var(--primary);
+
+      margin-top:
+        12px;
+
+      line-height:
+        1.5;
+
+    }
+
+
+    /* ==================================================
+       PESAN ERROR
+    ================================================== */
+
+    #status {
+
+      display:
+        none;
+
+      margin-top:
+        15px;
+
+      padding:
+        12px;
+
+      border-radius:
+        6px;
+
+      font-size:
+        0.9rem;
+
+      line-height:
+        1.5;
+
+    }
+
+
+    #status.error {
+
+      display:
+        block;
+
+      color:
+        var(--danger);
+
+      background:
+        var(--danger-bg);
+
+      border:
+        1px solid #f1b8b3;
+
+    }
+
+
+    .required-note {
+
+      font-size:
+        0.78rem;
+
+      color:
+        var(--muted);
+
+      margin-top:
+        15px;
+
+      text-align:
+        center;
+
+    }
+
+
+    /* ==================================================
+       POPUP SUKSES
+    ================================================== */
+
+    .modal-overlay {
+
+      display:
+        none;
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      background:
+        rgba(0, 0, 0, 0.45);
+
+      z-index:
+        99999;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        20px;
+
+    }
+
+
+    .modal-overlay.show {
+
+      display:
+        flex;
+
+    }
+
+
+    .success-modal {
+
+      width:
+        100%;
+
+      max-width:
+        430px;
+
+      background:
+        #ffffff;
+
+      border-radius:
+        16px;
+
+      padding:
+        30px 25px;
+
+      text-align:
+        center;
+
+      box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.20);
+
+      animation:
+        modalAppear 0.25s ease-out;
+
+    }
+
+
+    @keyframes modalAppear {
+
+      from {
+
+        opacity:
+          0;
+
+        transform:
+          scale(0.85)
+          translateY(10px);
+
+      }
+
+      to {
+
+        opacity:
+          1;
+
+        transform:
+          scale(1)
+          translateY(0);
+
+      }
+
+    }
+
+
+    .success-icon {
+
+      width:
+        65px;
+
+      height:
+        65px;
+
+      margin:
+        0 auto 15px;
+
+      border-radius:
+        50%;
+
+      background:
+        #e9f7ed;
+
+      color:
+        #23824a;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      font-size:
+        38px;
+
+      font-weight:
+        bold;
+
+    }
+
+
+    .success-modal h3 {
+
+      margin:
+        0 0 10px;
+
+      color:
+        #216e39;
+
+      font-size:
+        1.35rem;
+
+    }
+
+
+    .success-modal p {
+
+      margin:
+        0 0 25px;
+
+      color:
+        #555;
+
+      font-size:
+        0.95rem;
+
+      line-height:
+        1.6;
+
+    }
+
+
+    .modal-button {
+
+      width:
+        100%;
+
+      padding:
+        11px;
+
+      border:
+        none;
+
+      border-radius:
+        7px;
+
+      background:
+        var(--primary);
+
+      color:
+        white;
+
+      font-size:
+        1rem;
+
+      font-weight:
+        bold;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .modal-button:hover {
+
+      background:
+        var(--primary-hover);
+
+    }
+
+
+    /* ==================================================
+       MOBILE
+    ================================================== */
+
+    @media (max-width: 600px) {
+
+      body {
+
+        padding:
+          10px;
+
+      }
+
+
+      .container {
+
+        margin:
+          10px auto;
+
+        padding:
+          20px;
+
+        border-radius:
+          10px;
+
+      }
+
+
+      h2 {
+
+        font-size:
+          1.25rem;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+  <h2>
+    Universitas Sembagi Arutala
+  </h2>
+
+
+  <p class="subtitle">
+    Formulir Pengajuan Dosen Pembimbing Tugas Akhir
+  </p>
+
+
+  <form id="pengajuanForm">
+
+
+    <!-- ==================================================
+         NIM
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="nim">
+        NIM *
+      </label>
+
+      <input
+        type="text"
+        id="nim"
+        maxlength="50"
+        required
+        autocomplete="off"
+        placeholder="Masukkan NIM Anda"
+      >
+
+    </div>
+
+
+    <!-- ==================================================
+         NAMA
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="nama">
+        NAMA *
+      </label>
+
+      <input
+        type="text"
+        id="nama"
+        maxlength="150"
+        required
+        autocomplete="name"
+        placeholder="Masukkan Nama Lengkap"
+      >
+
+    </div>
+
+
+    <!-- ==================================================
+         USERNAME
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="username">
+        USERNAME *
+      </label>
+
+      <input
+        type="text"
+        id="username"
+        maxlength="100"
+        required
+        autocomplete="username"
+        placeholder="Masukkan Username Sistem"
+      >
+
+    </div>
+
+
+    <!-- ==================================================
+         PROGRAM STUDI
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="prodi">
+        PROGRAM STUDI *
+      </label>
+
+      <select
+        id="prodi"
+        required
+      >
+
+        <option value="">
+          -- Pilih Program Studi --
+        </option>
+
+        <option value="Psikologi">
+          Psikologi (S.Psi)
+        </option>
+
+        <option value="Bisnis & Manajemen">
+          Bisnis & Manajemen (S.Bns)
+        </option>
+
+        <option value="Ilmu Komunikasi">
+          Ilmu Komunikasi (S.I.Kom)
+        </option>
+
+        <option value="Hukum">
+          Hukum (S.H)
+        </option>
+
+        <option value="Sastra dan Bahasa Indonesia">
+          Sastra dan Bahasa Indonesia (S.S)
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ==================================================
+         JUDUL
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="judul">
+        JUDUL *
+      </label>
+
+      <input
+        type="text"
+        id="judul"
+        maxlength="500"
+        required
+        placeholder="Judul Proposal / Tugas Akhir"
+      >
+
+    </div>
+
+
+    <!-- ==================================================
+         RUMUSAN MASALAH
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="rumusan">
+        RUMUSAN MASALAH *
+      </label>
+
+      <textarea
+        id="rumusan"
+        rows="4"
+        maxlength="3000"
+        required
+        placeholder="Tuliskan ringkasan rumusan masalah"
+      ></textarea>
+
+    </div>
+
+
+    <!-- ==================================================
+         TOPIK
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="topik">
+        TOPIK *
+      </label>
+
+      <input
+        type="text"
+        id="topik"
+        maxlength="300"
+        required
+        placeholder="Contoh: Psikologi Sosial / Manajemen Strategis / Hukum Pidana"
+      >
+
+    </div>
+
+
+    <!-- ==================================================
+         DOSEN PEMBIMBING
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="dosen">
+        DOSEN PEMBIMBING *
+      </label>
+
+      <select
+        id="dosen"
+        required
+        disabled
+      >
+
+        <option value="">
+          -- Pilih Program Studi Terlebih Dahulu --
+        </option>
+
+      </select>
+
+
+      <div
+        id="quotaInfo"
+        class="quota-info"
+      ></div>
+
+    </div>
+
+
+    <!-- ==================================================
+         DOKUMEN
+    ================================================== -->
+
+    <div class="form-group">
+
+      <label for="dokumen">
+
+        DOKUMEN FORMULIR PENGAJUAN
+        (PDF / DOC / DOCX) *
+
+      </label>
+
+
+      <input
+        type="file"
+        id="dokumen"
+        accept=".pdf,.doc,.docx"
+        required
+      >
+
+
+      <div class="file-hint">
+
+        Format:
+        PDF, DOC, atau DOCX.
+        Ukuran maksimal 5 MB.
+
+      </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         SUBMIT
+    ================================================== -->
+
+    <button
+      type="submit"
+      id="submitBtn"
+    >
+      Kirim Pengajuan
+    </button>
+
+
+    <!-- ==================================================
+         LOADING
+    ================================================== -->
+
+    <div id="loading">
+
+      Memproses data dan mengunggah dokumen
+      ke Google Drive...
+
+    </div>
+
+
+    <!-- ==================================================
+         ERROR
+    ================================================== -->
+
+    <div id="status"></div>
+
+
+    <div class="required-note">
+
+      * Semua field wajib diisi.
+
+    </div>
+
+
+  </form>
+
+</div>
+
+
+<!-- ======================================================
+     POPUP SUKSES
+====================================================== -->
+
+<div
+  id="successModal"
+  class="modal-overlay"
+>
+
+  <div class="success-modal">
+
+    <div class="success-icon">
+      ✓
+    </div>
+
+
+    <h3>
+      Pengajuan Berhasil!
+    </h3>
+
+
+    <p id="successMessage">
+
+      Pengajuan dosen pembimbing
+      berhasil dikirim.
+
+    </p>
+
+
+    <button
+      type="button"
+      id="closeModalBtn"
+      class="modal-button"
+    >
+      OK
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   URL GOOGLE APPS SCRIPT WEB APP
+===================================================== */
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzD98k3zA03YYTYy3JNZ80tyeCUJhYX3dgMY_bA2qvZfr2OyK38OVLqErQsnGAA5co9/exec";
+
+
+/* =====================================================
+   KONFIGURASI
+===================================================== */
+
+const MAX_KUOTA = 10;
+
+const MAX_FILE_SIZE =
+  5 * 1024 * 1024;
+
+
+/* =====================================================
+   MASTER DOSEN
+===================================================== */
+
+const masterDosen = [
+
+  /* PSIKOLOGI */
+
+  {
+    prodi: "Psikologi",
+    nama: "Dosen 1"
+  },
+
+  {
+    prodi: "Psikologi",
+    nama: "Dosen 2"
+  },
+
+  {
+    prodi: "Psikologi",
+    nama: "Dosen 3"
+  },
+
+
+  /* BISNIS & MANAJEMEN */
+
+  {
+    prodi: "Bisnis & Manajemen",
+    nama: "Dosen 1"
+  },
+
+  {
+    prodi: "Bisnis & Manajemen",
+    nama: "Dosen 2"
+  },
+
+  {
+    prodi: "Bisnis & Manajemen",
+    nama: "Dosen 3"
+  },
+
+
+  /* ILMU KOMUNIKASI */
+
+  {
+    prodi: "Ilmu Komunikasi",
+    nama: "Dosen 1"
+  },
+
+  {
+    prodi: "Ilmu Komunikasi",
+    nama: "Dosen 2"
+  },
+
+  {
+    prodi: "Ilmu Komunikasi",
+    nama: "Dosen 3"
+  },
+
+
+  /* HUKUM */
+
+  {
+    prodi: "Hukum",
+    nama: "Dosen 1"
+  },
+
+  {
+    prodi: "Hukum",
+    nama: "Dosen 2"
+  },
+
+  {
+    prodi: "Hukum",
+    nama: "Dosen 3"
+  },
+
+
+  /* SASTRA DAN BAHASA INDONESIA */
+
+  {
+    prodi: "Sastra dan Bahasa Indonesia",
+    nama: "Dosen 1"
+  },
+
+  {
+    prodi: "Sastra dan Bahasa Indonesia",
+    nama: "Dosen 2"
+  },
+
+  {
+    prodi: "Sastra dan Bahasa Indonesia",
+    nama: "Dosen 3"
+  }
+
+];
+
+
+/* =====================================================
+   VARIABEL
+===================================================== */
+
+let countDosenTerisi = {};
+
+let isSubmitting = false;
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const form =
+  document.getElementById(
+    "pengajuanForm"
+  );
+
+
+const nimInput =
+  document.getElementById(
+    "nim"
+  );
+
+
+const namaInput =
+  document.getElementById(
+    "nama"
+  );
+
+
+const usernameInput =
+  document.getElementById(
+    "username"
+  );
+
+
+const prodiSelect =
+  document.getElementById(
+    "prodi"
+  );
+
+
+const judulInput =
+  document.getElementById(
+    "judul"
+  );
+
+
+const rumusanInput =
+  document.getElementById(
+    "rumusan"
+  );
+
+
+const topikInput =
+  document.getElementById(
+    "topik"
+  );
+
+
+const dosenSelect =
+  document.getElementById(
+    "dosen"
+  );
+
+
+const fileInput =
+  document.getElementById(
+    "dokumen"
+  );
+
+
+const submitBtn =
+  document.getElementById(
+    "submitBtn"
+  );
+
+
+const loading =
+  document.getElementById(
+    "loading"
+  );
+
+
+const statusBox =
+  document.getElementById(
+    "status"
+  );
+
+
+const quotaInfo =
+  document.getElementById(
+    "quotaInfo"
+  );
+
+
+const successModal =
+  document.getElementById(
+    "successModal"
+  );
+
+
+const successMessage =
+  document.getElementById(
+    "successMessage"
+  );
+
+
+const closeModalBtn =
+  document.getElementById(
+    "closeModalBtn"
+  );
+
+
+/* =====================================================
+   SAAT HALAMAN DIBUKA
+===================================================== */
+
+window.addEventListener(
+  "load",
+  function() {
+
+    loadQuota();
+
+  }
+);
+
+
+/* =====================================================
+   RESET SEMUA KUOTA (LOKAL BROWSER / INSPECT ONLY)
+===================================================== */
+
+function resetAllQuota() {
+
+  const password =
+    prompt(
+      "Masukkan kode reset kuota:"
+    );
+
+
+  if (
+    password !==
+    "RESETUSA2026"
+  ) {
+
+    alert(
+      "Kode reset salah."
+    );
+
+    return;
+
+  }
+
+
+  // Kosongkan kuota lokal di memori browser
+  countDosenTerisi = {};
+
+
+  // Perbarui tampilan dropdown dosen dan info kuota
+  filterDosen();
+
+
+  alert(
+    "Semua kuota berhasil di-reset secara lokal!"
+  );
+
+}
+
+
+/* =====================================================
+   AMBIL KUOTA DARI SERVER
+===================================================== */
+
+function loadQuota() {
+
+  fetch(
+    SCRIPT_URL +
+    "?action=quota&t=" +
+    Date.now(),
+    {
+      method: "GET",
+      cache: "no-store"
+    }
+  )
+
+  .then(
+    function(response) {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Server tidak dapat dihubungi."
+        );
+
+      }
+
+      return response.json();
+
+    }
+  )
+
+  .then(
+    function(response) {
+
+      if (
+        response.status ===
+        "success"
+      ) {
+
+        countDosenTerisi =
+          response.counts || {};
+
+      } else {
+
+        countDosenTerisi = {};
+
+      }
+
+
+      filterDosen();
+
+    }
+  )
+
+  .catch(
+    function(error) {
+
+      console.error(
+        "Gagal mengambil kuota:",
+        error
+      );
+
+
+      /*
+       * Daftar dosen tetap ditampilkan
+       * walaupun data kuota gagal diambil.
+       */
+
+      countDosenTerisi = {};
+
+      filterDosen();
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   PERUBAHAN PROGRAM STUDI
+===================================================== */
+
+prodiSelect.addEventListener(
+  "change",
+  function() {
+
+    filterDosen();
+
+    clearError();
+
+  }
+);
+
+
+/* =====================================================
+   FILTER DOSEN
+===================================================== */
+
+function filterDosen() {
+
+  const prodi =
+    prodiSelect.value;
+
+
+  dosenSelect.innerHTML =
+    "";
+
+
+  quotaInfo.textContent =
+    "";
+
+
+  if (!prodi) {
+
+    dosenSelect.disabled =
+      true;
+
+
+    const option =
+      document.createElement(
+        "option"
+      );
+
+
+    option.value =
+      "";
+
+
+    option.textContent =
+      "-- Pilih Program Studi Terlebih Dahulu --";
+
+
+    dosenSelect.appendChild(
+      option
+    );
+
+
+    return;
+
+  }
+
+
+  dosenSelect.disabled =
+    false;
+
+
+  const firstOption =
+    document.createElement(
+      "option"
+    );
+
+
+  firstOption.value =
+    "";
+
+
+  firstOption.textContent =
+    "-- Pilih Dosen Pembimbing --";
+
+
+  dosenSelect.appendChild(
+    firstOption
+  );
+
+
+  const filtered =
+    masterDosen.filter(
+      function(dosen) {
+
+        return (
+          dosen.prodi ===
+          prodi
+        );
+
+      }
+    );
+
+
+  filtered.forEach(
+    function(dosen) {
+
+      const terisi =
+        Number(
+          countDosenTerisi[
+            dosen.nama
+          ] || 0
+        );
+
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        dosen.nama;
+
+
+      option.textContent =
+        dosen.nama +
+        " (" +
+        terisi +
+        "/" +
+        MAX_KUOTA +
+        ")";
+
+
+      if (
+        terisi >=
+        MAX_KUOTA
+      ) {
+
+        option.textContent +=
+          " - KUOTA PENUH";
+
+
+        option.disabled =
+          true;
+
+      }
+
+
+      dosenSelect.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   PILIH DOSEN
+===================================================== */
+
+dosenSelect.addEventListener(
+  "change",
+  function() {
+
+    updateQuotaInfo();
+
+    clearError();
+
+  }
+);
+
+
+/* =====================================================
+   INFORMASI KUOTA
+===================================================== */
+
+function updateQuotaInfo() {
+
+  const dosen =
+    dosenSelect.value;
+
+
+  if (!dosen) {
+
+    quotaInfo.textContent =
+      "";
+
+    return;
+
+  }
+
+
+  const terisi =
+    Number(
+      countDosenTerisi[
+        dosen
+      ] || 0
+    );
+
+
+  const sisa =
+    Math.max(
+      0,
+      MAX_KUOTA - terisi
+    );
+
+
+  quotaInfo.textContent =
+    "Sisa kuota: " +
+    sisa +
+    " dari " +
+    MAX_KUOTA +
+    ".";
+
+}
+
+
+/* =====================================================
+   VALIDASI FILE
+===================================================== */
+
+fileInput.addEventListener(
+  "change",
+  function() {
+
+    clearError();
+
+
+    const file =
+      fileInput.files[0];
+
+
+    if (!file) {
+
+      return;
+
+    }
+
+
+    /* CEK UKURAN */
+
+    if (
+      file.size >
+      MAX_FILE_SIZE
+    ) {
+
+      fileInput.value =
+        "";
+
+
+      showError(
+        "Ukuran file terlalu besar. Maksimal 5 MB."
+      );
+
+
+      return;
+
+    }
+
+
+    /* CEK EKSTENSI */
+
+    const fileName =
+      file.name.toLowerCase();
+
+
+    const allowedExtensions = [
+
+      ".pdf",
+
+      ".doc",
+
+      ".docx"
+
+    ];
+
+
+    const validExtension =
+      allowedExtensions.some(
+        function(extension) {
+
+          return fileName.endsWith(
+            extension
+          );
+
+        }
+      );
+
+
+    if (
+      !validExtension
+    ) {
+
+      fileInput.value =
+        "";
+
+
+      showError(
+        "File hanya boleh PDF, DOC, atau DOCX."
+      );
+
+
+      return;
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   SUBMIT FORM
+===================================================== */
+
+form.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+
+    if (isSubmitting) {
+
+      return;
+
+    }
+
+
+    clearError();
+
+
+    /* VALIDASI HTML */
+
+    if (
+      !form.checkValidity()
+    ) {
+
+      form.reportValidity();
+
+      return;
+
+    }
+
+
+    const file =
+      fileInput.files[0];
+
+
+    if (!file) {
+
+      showError(
+        "Silakan pilih dokumen pengajuan."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      file.size >
+      MAX_FILE_SIZE
+    ) {
+
+      showError(
+        "Ukuran file maksimal 5 MB."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !prodiSelect.value
+    ) {
+
+      showError(
+        "Silakan pilih Program Studi."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !dosenSelect.value
+    ) {
+
+      showError(
+        "Silakan pilih Dosen Pembimbing."
+      );
+
+      return;
+
+    }
+
+
+    /* MULAI PROSES */
+
+    isSubmitting =
+      true;
+
+
+    setFormDisabled(
+      true
+    );
+
+
+    loading.style.display =
+      "block";
+
+
+    loading.textContent =
+      "Membaca dokumen...";
+
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload =
+      function() {
+
+        loading.textContent =
+          "Mengirim data dan dokumen...";
+
+
+        const payload = {
+
+          nim:
+            nimInput.value.trim(),
+
+          nama:
+            namaInput.value.trim(),
+
+          username:
+            usernameInput.value.trim(),
+
+          prodi:
+            prodiSelect.value,
+
+          judul:
+            judulInput.value.trim(),
+
+          rumusan:
+            rumusanInput.value.trim(),
+
+          topik:
+            topikInput.value.trim(),
+
+          dosen:
+            dosenSelect.value,
+
+          fileName:
+            file.name,
+
+          fileType:
+            file.type,
+
+          fileBase64:
+            reader.result
+
+        };
+
+
+        sendData(
+          payload
+        );
+
+      };
+
+
+    reader.onerror =
+      function() {
+
+        finishSubmit();
+
+
+        showError(
+          "Dokumen gagal dibaca oleh browser."
+        );
+
+      };
+
+
+    reader.readAsDataURL(
+      file
+    );
+
+  }
+);
+
+
+/* =====================================================
+   KIRIM KE APPS SCRIPT
+===================================================== */
+
+function sendData(
+  payload
+) {
+
+  fetch(
+    SCRIPT_URL,
+    {
+
+      method:
+        "POST",
+
+      headers: {
+
+        /*
+         * text/plain membantu menghindari
+         * preflight request tertentu.
+         */
+
+        "Content-Type":
+          "text/plain;charset=utf-8"
+
+      },
+
+      body:
+        JSON.stringify(
+          payload
+        )
+
+    }
+  )
+
+  .then(
+    function(response) {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Server mengembalikan HTTP " +
+          response.status
+        );
+
+      }
+
+
+      return response.text();
+
+    }
+  )
+
+  .then(
+    function(text) {
+
+      let response;
+
+
+      try {
+
+        response =
+          JSON.parse(
+            text
+          );
+
+      } catch (error) {
+
+        console.error(
+          "Response server:",
+          text
+        );
+
+
+        throw new Error(
+          "Response dari server tidak valid."
+        );
+
+      }
+
+
+      if (
+        response.status !==
+        "success"
+      ) {
+
+        throw new Error(
+          response.message ||
+          "Pengajuan tidak berhasil."
+        );
+
+      }
+
+
+      /* ==========================================
+         BERHASIL
+      ========================================== */
+
+      let message =
+        response.message ||
+        "Pengajuan dosen pembimbing berhasil dikirim!";
+
+
+      if (
+        response.dosen
+      ) {
+
+        message +=
+          " Dosen: " +
+          response.dosen +
+          ".";
+
+      }
+
+
+      if (
+        typeof response.sisa !==
+        "undefined"
+      ) {
+
+        message +=
+          " Sisa kuota: " +
+          response.sisa +
+          ".";
+
+      }
+
+
+      showSuccessModal(
+        message
+      );
+
+
+      /*
+       * Kosongkan form setelah berhasil.
+       */
+
+      form.reset();
+
+
+      dosenSelect.innerHTML =
+        '<option value="">-- Pilih Program Studi Terlebih Dahulu --</option>';
+
+
+      dosenSelect.disabled =
+        true;
+
+
+      quotaInfo.textContent =
+        "";
+
+
+      /*
+       * Ambil kuota terbaru.
+       */
+
+      loadQuota();
+
+    }
+  )
+
+  .catch(
+    function(error) {
+
+      console.error(
+        "Submit error:",
+        error
+      );
+
+
+      showError(
+        error.message ||
+        "Terjadi kesalahan saat mengirim pengajuan."
+      );
+
+    }
+  )
+
+  .finally(
+    function() {
+
+      finishSubmit();
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   POPUP SUKSES
+===================================================== */
+
+function showSuccessModal(
+  message
+) {
+
+  successMessage.textContent =
+    message;
+
+
+  successModal.classList.add(
+    "show"
+  );
+
+}
+
+
+/* =====================================================
+   TUTUP POPUP
+===================================================== */
+
+function closeSuccessModal() {
+
+  successModal.classList.remove(
+    "show"
+  );
+
+}
+
+
+closeModalBtn.addEventListener(
+  "click",
+  closeSuccessModal
+);
+
+
+/* =====================================================
+   KLIK AREA GELAP UNTUK MENUTUP POPUP
+===================================================== */
+
+successModal.addEventListener(
+  "click",
+  function(event) {
+
+    if (
+      event.target ===
+      successModal
+    ) {
+
+      closeSuccessModal();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ESC UNTUK MENUTUP POPUP
+===================================================== */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key ===
+      "Escape"
+    ) {
+
+      closeSuccessModal();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(
+  message
+) {
+
+  statusBox.className =
+    "error";
+
+
+  statusBox.textContent =
+    message;
+
+
+  statusBox.style.display =
+    "block";
+
+
+  statusBox.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+
+}
+
+
+/* =====================================================
+   HAPUS ERROR
+===================================================== */
+
+function clearError() {
+
+  statusBox.className =
+    "";
+
+  statusBox.textContent =
+    "";
+
+  statusBox.style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   DISABLE FORM
+===================================================== */
+
+function setFormDisabled(
+  disabled
+) {
+
+  const elements =
+    form.querySelectorAll(
+      "input, select, textarea, button"
+    );
+
+
+  elements.forEach(
+    function(element) {
+
+      element.disabled =
+        disabled;
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   SELESAI SUBMIT
+===================================================== */
+
+function finishSubmit() {
+
+  isSubmitting =
+    false;
+
+
+  setFormDisabled(
+    false
+  );
+
+
+  /*
+   * Setelah selesai, dropdown dosen harus
+   * mengikuti kondisi program studi.
+   */
+
+  if (
+    prodiSelect.value
+  ) {
+
+    dosenSelect.disabled =
+      false;
+
+  } else {
+
+    dosenSelect.disabled =
+      true;
+
+  }
+
+
+  loading.style.display =
+    "none";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
