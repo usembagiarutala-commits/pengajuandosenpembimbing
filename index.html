@@ -10,645 +10,348 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Pengajuan Dosen Pembimbing - Universitas Sembagi Arutala
-  </title>
+  <title>Portal Akademik - Universitas Sembagi Arutala</title>
 
 
   <style>
-
     :root {
-      --bg-color: #fcfbf7;
-      --card-bg: #ffffff;
-      --primary: #4a6b5d;
-      --primary-hover: #3b574a;
-      --border: #dcd7cc;
-      --text: #2c302e;
-      --muted: #777777;
-
-      --danger: #b42318;
-      --danger-bg: #fff1f0;
-
-      --success: #216e39;
-      --success-bg: #edf7ef;
+      --bg-color: #f7f3ef;
+      --card-bg: #fffdfa;
+      --primary: #8b5148;
+      --primary-hover: #744139;
+      --primary-soft: #f4e9e5;
+      --brown: #6f5548;
+      --border: #e6d9d1;
+      --text: #392f2b;
+      --muted: #8b7b73;
+      --danger: #a9443d;
+      --danger-bg: #fbefed;
+      --success: #54745d;
+      --success-bg: #edf3ec;
+      --shadow: 0 16px 42px rgba(83, 54, 43, .08);
     }
 
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
 
     body {
-
-      font-family:
-        "Segoe UI",
-        Tahoma,
-        Geneva,
-        Verdana,
-        sans-serif;
-
-      background-color:
-        var(--bg-color);
-
-      color:
-        var(--text);
-
+      min-height: 100vh;
       margin: 0;
-
-      padding: 20px;
-
+      padding: 34px 18px 48px;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 12% 0%, rgba(190, 143, 125, .13), transparent 34%),
+        radial-gradient(ellipse at 100% 16%, rgba(139, 81, 72, .08), transparent 30%),
+        var(--bg-color);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
-
 
     .container {
-
       width: 100%;
-
-      max-width: 650px;
-
-      margin: 20px auto;
-
-      background:
-        var(--card-bg);
-
-      padding: 30px;
-
-      border-radius: 12px;
-
-      box-shadow:
-        0 4px 15px
-        rgba(0, 0, 0, 0.05);
-
-      border:
-        1px solid var(--border);
-
+      max-width: 760px;
+      margin: 12px auto;
+      padding: 34px 38px 38px;
+      background: var(--card-bg);
+      border: 1px solid rgba(230, 217, 209, .9);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
     }
-
 
     h2 {
-
+      margin: 0 0 7px;
+      color: var(--brown);
       text-align: center;
-
-      color:
-        var(--primary);
-
-      margin:
-        0 0 5px;
-
-      font-size:
-        1.5rem;
-
+      font-size: 1.55rem;
+      font-weight: 750;
+      letter-spacing: -.035em;
     }
-
 
     .subtitle {
-
+      margin: 0 0 25px;
+      color: var(--muted);
       text-align: center;
-
-      font-size:
-        0.9rem;
-
-      color:
-        var(--muted);
-
-      margin:
-        0 0 25px;
-
-      line-height:
-        1.5;
-
+      font-size: .92rem;
+      line-height: 1.6;
     }
 
-
-    .form-group {
-
-      margin-bottom:
-        18px;
-
+    .portal-nav {
+      display: flex;
+      gap: 7px;
+      max-width: 100%;
+      margin: 0 auto 27px;
+      padding: 6px;
+      background: #f5eee9;
+      border: 1px solid var(--border);
+      border-radius: 12px;
     }
 
+    .portal-tab {
+      flex: 1;
+      min-height: 44px;
+      padding: 11px 14px;
+      color: var(--brown);
+      background: transparent;
+      border: 0;
+      border-radius: 8px;
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 650;
+      cursor: pointer;
+      transition: background .18s ease, color .18s ease, box-shadow .18s ease;
+    }
+
+    .portal-tab:hover { background: rgba(255,255,255,.7); }
+    .portal-tab.active {
+      color: #fffaf7;
+      background: var(--primary);
+      box-shadow: 0 3px 9px rgba(116, 65, 57, .18);
+    }
+
+    .portal-panel[hidden] { display: none !important; }
+    .portal-panel > .subtitle { margin-bottom: 25px; }
+
+    .form-group { margin-bottom: 19px; }
 
     label {
-
-      display:
-        block;
-
-      font-weight:
-        600;
-
-      margin-bottom:
-        6px;
-
-      font-size:
-        0.95rem;
-
+      display: block;
+      margin-bottom: 7px;
+      color: #55443c;
+      font-size: .91rem;
+      font-weight: 650;
     }
 
-
-    input[type="text"],
-    input[type="file"],
-    textarea,
-    select {
-
-      width:
-        100%;
-
-      padding:
-        10px 12px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius:
-        6px;
-
-      background-color:
-        #fafafa;
-
-      color:
-        var(--text);
-
-      font-size:
-        0.95rem;
-
-      font-family:
-        inherit;
-
+    input[type="text"], input[type="number"], input[type="file"], textarea, select {
+      display: block;
+      width: 100%;
+      min-height: 45px;
+      padding: 11px 13px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: .93rem;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
     }
 
-
-    input[type="text"]:focus,
-    textarea:focus,
-    select:focus {
-
-      outline:
-        none;
-
-      border-color:
-        var(--primary);
-
-      background-color:
-        #ffffff;
-
-      box-shadow:
-        0 0 0 2px
-        rgba(74, 107, 93, 0.08);
-
+    input::placeholder, textarea::placeholder { color: #b2a49c; }
+    input[type="text"]:focus, input[type="number"]:focus, input[type="file"]:focus,
+    textarea:focus, select:focus {
+      outline: none;
+      border-color: #b77b70;
+      background: #fffefd;
+      box-shadow: 0 0 0 3px rgba(139, 81, 72, .11);
     }
 
+    textarea { min-height: 100px; resize: vertical; line-height: 1.55; }
+    input[type="file"] { padding: 8px 10px; cursor: pointer; background: #fffdfa; }
+    input[type="file"]::file-selector-button {
+      margin-right: 10px;
+      padding: 8px 11px;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 0;
+      border-radius: 6px;
+      font: inherit;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    select:disabled { color: #aa9d96; background: #f5f1ee; cursor: not-allowed; }
 
-    textarea {
-
-      resize:
-        vertical;
-
-      min-height:
-        90px;
-
+    .file-hint, .sidang-file-hint, .quota-info {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.55;
     }
 
-
-    input[type="file"] {
-
-      padding:
-        9px;
-
-      cursor:
-        pointer;
-
+    button:not(.portal-tab):not(.date-card):not(.time-slot) {
+      min-height: 46px;
+      padding: 12px 17px;
+      color: #fffaf7;
+      background: var(--primary);
+      border: 0;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: .94rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
     }
-
-
-    select:disabled {
-
-      background:
-        #f2f2f2;
-
-      color:
-        #999;
-
-      cursor:
-        not-allowed;
-
+    button:not(.portal-tab):not(.date-card):not(.time-slot):hover:not(:disabled) {
+      background: var(--primary-hover);
+      box-shadow: 0 5px 12px rgba(116, 65, 57, .16);
+      transform: translateY(-1px);
     }
-
-
-    .file-hint {
-
-      font-size:
-        0.8rem;
-
-      color:
-        var(--muted);
-
-      margin-top:
-        5px;
-
-      line-height:
-        1.4;
-
-    }
-
-
-    .quota-info {
-
-      font-size:
-        0.8rem;
-
-      color:
-        var(--muted);
-
-      margin-top:
-        6px;
-
-      line-height:
-        1.4;
-
-    }
-
-
-    button {
-
-      width:
-        100%;
-
-      background-color:
-        var(--primary);
-
-      color:
-        white;
-
-      padding:
-        12px;
-
-      border:
-        none;
-
-      border-radius:
-        6px;
-
-      font-size:
-        1rem;
-
-      font-weight:
-        bold;
-
-      cursor:
-        pointer;
-
-      transition:
-        background 0.2s ease;
-
-    }
-
-
-    button:hover:not(:disabled) {
-
-      background-color:
-        var(--primary-hover);
-
-    }
-
-
-    button:disabled {
-
-      background:
-        #aaaaaa;
-
-      cursor:
-        not-allowed;
-
-    }
-
-
-    #loading {
-
-      display:
-        none;
-
-      text-align:
-        center;
-
-      font-size:
-        0.9rem;
-
-      color:
-        var(--primary);
-
-      margin-top:
-        12px;
-
-      line-height:
-        1.5;
-
-    }
-
-
-    /* ==================================================
-       PESAN ERROR
-    ================================================== */
-
-    #status {
-
-      display:
-        none;
-
-      margin-top:
-        15px;
-
-      padding:
-        12px;
-
-      border-radius:
-        6px;
-
-      font-size:
-        0.9rem;
-
-      line-height:
-        1.5;
-
-    }
-
-
-    #status.error {
-
-      display:
-        block;
-
-      color:
-        var(--danger);
-
-      background:
-        var(--danger-bg);
-
-      border:
-        1px solid #f1b8b3;
-
-    }
-
+    button:disabled { opacity: .6; cursor: not-allowed; }
+    #submitBtn, #sidangSubmitBtn { width: 100%; margin-top: 4px; }
 
     .required-note {
-
-      font-size:
-        0.78rem;
-
-      color:
-        var(--muted);
-
-      margin-top:
-        15px;
-
-      text-align:
-        center;
-
+      margin-top: 15px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .78rem;
     }
 
+    #loading, #sidangLoading {
+      margin-top: 13px;
+      color: var(--primary);
+      text-align: center;
+      font-size: .88rem;
+      line-height: 1.5;
+    }
 
-    /* ==================================================
-       POPUP SUKSES
-    ================================================== */
+    #status, #sidangStatus {
+      display: none;
+      margin-top: 15px;
+      padding: 12px 14px;
+      border: 1px solid #e8c4bd;
+      border-radius: 9px;
+      color: var(--danger);
+      background: var(--danger-bg);
+      font-size: .88rem;
+      line-height: 1.55;
+    }
+    #status.error, #sidangStatus.error { display: block; }
+
+    .schedule-help {
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      color: #765b50;
+      background: #f7f0eb;
+      border: 1px solid #eee0d7;
+      border-radius: 9px;
+      font-size: .84rem;
+      line-height: 1.55;
+    }
+
+    .date-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 9px;
+      margin: 0 0 18px;
+    }
+    .date-card {
+      min-width: 0;
+      padding: 13px 5px;
+      color: var(--text);
+      text-align: center;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+    .date-card:hover { border-color: #c99a8e; background: #fdf8f5; transform: translateY(-2px); }
+    .date-card .day, .date-card .month {
+      display: block;
+      color: var(--muted);
+      font-size: .69rem;
+      font-weight: 650;
+      letter-spacing: .045em;
+    }
+    .date-card .date { display: block; margin: 5px 0; color: var(--brown); font-size: 1.3rem; font-weight: 800; }
+    .date-card.active {
+      padding: 12px 4px;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 2px solid var(--primary);
+      box-shadow: 0 3px 9px rgba(139, 81, 72, .09);
+    }
+    .date-card.active .day, .date-card.active .month { color: var(--primary); }
+
+    .time-area { display: none; margin: 7px 0 19px; padding: 16px; background: #fbf7f4; border: 1px solid #eee2db; border-radius: 11px; }
+    .time-area.show { display: block; }
+    .time-area > label { margin-bottom: 11px; }
+    .time-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+    .time-slot {
+      min-height: 45px;
+      padding: 11px 8px;
+      color: var(--brown);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: inherit;
+      font-size: .84rem;
+      font-weight: 650;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+    .time-slot:hover { border-color: #c99a8e; background: #fffaf7; }
+    .time-slot.active {
+      color: #fffaf7;
+      background: var(--primary);
+      border: 1px solid var(--primary);
+      box-shadow: 0 3px 9px rgba(139, 81, 72, .16);
+    }
+    .selected-schedule {
+      display: none;
+      margin-top: 13px;
+      padding: 11px 13px;
+      color: #5d705c;
+      background: var(--success-bg);
+      border: 1px solid #dce8d9;
+      border-radius: 8px;
+      font-size: .86rem;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+    .selected-schedule.show { display: block; }
 
     .modal-overlay {
-
-      display:
-        none;
-
-      position:
-        fixed;
-
-      inset:
-        0;
-
-      background:
-        rgba(0, 0, 0, 0.45);
-
-      z-index:
-        99999;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      padding:
-        20px;
-
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(48, 35, 30, .48);
+      backdrop-filter: blur(3px);
     }
-
-
-    .modal-overlay.show {
-
-      display:
-        flex;
-
-    }
-
-
+    .modal-overlay.show { display: flex; }
     .success-modal {
-
-      width:
-        100%;
-
-      max-width:
-        430px;
-
-      background:
-        #ffffff;
-
-      border-radius:
-        16px;
-
-      padding:
-        30px 25px;
-
-      text-align:
-        center;
-
-      box-shadow:
-        0 15px 45px
-        rgba(0, 0, 0, 0.20);
-
-      animation:
-        modalAppear 0.25s ease-out;
-
+      width: 100%;
+      max-width: 430px;
+      padding: 30px 26px;
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 18px 55px rgba(48, 35, 30, .22);
+      animation: modalAppear .22s ease-out;
     }
-
-
-    @keyframes modalAppear {
-
-      from {
-
-        opacity:
-          0;
-
-        transform:
-          scale(0.85)
-          translateY(10px);
-
-      }
-
-      to {
-
-        opacity:
-          1;
-
-        transform:
-          scale(1)
-          translateY(0);
-
-      }
-
-    }
-
-
+    @keyframes modalAppear { from { opacity: 0; transform: translateY(8px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
     .success-icon {
-
-      width:
-        65px;
-
-      height:
-        65px;
-
-      margin:
-        0 auto 15px;
-
-      border-radius:
-        50%;
-
-      background:
-        #e9f7ed;
-
-      color:
-        #23824a;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      font-size:
-        38px;
-
-      font-weight:
-        bold;
-
+      display: flex;
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 15px;
+      align-items: center;
+      justify-content: center;
+      color: var(--success);
+      background: var(--success-bg);
+      border-radius: 50%;
+      font-size: 35px;
+      font-weight: 700;
     }
-
-
-    .success-modal h3 {
-
-      margin:
-        0 0 10px;
-
-      color:
-        #216e39;
-
-      font-size:
-        1.35rem;
-
-    }
-
-
-    .success-modal p {
-
-      margin:
-        0 0 25px;
-
-      color:
-        #555;
-
-      font-size:
-        0.95rem;
-
-      line-height:
-        1.6;
-
-    }
-
-
-    .modal-button {
-
-      width:
-        100%;
-
-      padding:
-        11px;
-
-      border:
-        none;
-
-      border-radius:
-        7px;
-
-      background:
-        var(--primary);
-
-      color:
-        white;
-
-      font-size:
-        1rem;
-
-      font-weight:
-        bold;
-
-      cursor:
-        pointer;
-
-    }
-
-
-    .modal-button:hover {
-
-      background:
-        var(--primary-hover);
-
-    }
-
-
-    /* ==================================================
-       MOBILE
-    ================================================== */
+    .success-modal h3 { margin: 0 0 10px; color: var(--brown); font-size: 1.3rem; }
+    .success-modal p { margin: 0 0 23px; color: var(--muted); font-size: .92rem; line-height: 1.6; }
+    .modal-button { width: 100%; }
 
     @media (max-width: 600px) {
-
-      body {
-
-        padding:
-          10px;
-
-      }
-
-
-      .container {
-
-        margin:
-          10px auto;
-
-        padding:
-          20px;
-
-        border-radius:
-          10px;
-
-      }
-
-
-      h2 {
-
-        font-size:
-          1.25rem;
-
-      }
-
+      body { padding: 16px 10px 28px; }
+      .container { margin: 0 auto; padding: 25px 18px 27px; border-radius: 14px; }
+      h2 { font-size: 1.3rem; }
+      .portal-nav { gap: 4px; margin-bottom: 22px; }
+      .portal-tab { min-height: 42px; padding: 10px 6px; font-size: .78rem; }
+      .date-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .time-grid { grid-template-columns: 1fr; }
     }
+    @media (max-width: 360px) {
+      .portal-tab { font-size: .72rem; }
+      .date-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
 
   </style>
 
@@ -666,11 +369,15 @@
   </h2>
 
 
-  <p class="subtitle">
-    Formulir Pengajuan Dosen Pembimbing Tugas Akhir
-  </p>
+  <p class="subtitle">Portal Layanan Akademik Tugas Akhir</p>
 
+  <nav class="portal-nav" aria-label="Menu layanan akademik">
+    <button type="button" class="portal-tab active" data-panel="usulanPanel">Usulan Dospem</button>
+    <button type="button" class="portal-tab" data-panel="sidangPanel">Pendaftaran Sidang</button>
+  </nav>
 
+  <section id="usulanPanel" class="portal-panel">
+  <p class="subtitle">Formulir Pengajuan Dosen Pembimbing Tugas Akhir</p>
   <form id="pengajuanForm">
 
 
@@ -950,6 +657,35 @@
 
 
   </form>
+  </section>
+
+  <section id="sidangPanel" class="portal-panel" hidden>
+    <p class="subtitle">Formulir Pendaftaran Sidang Tugas Akhir / Skripsi</p>
+    <form id="sidangForm">
+      <div class="form-group"><label for="sidangNama">Nama Lengkap *</label><input id="sidangNama" type="text" maxlength="150" required placeholder="Masukkan nama lengkap"></div>
+      <div class="form-group"><label for="sidangNim">NIM *</label><input id="sidangNim" type="text" maxlength="50" required placeholder="Masukkan NIM"></div>
+      <div class="form-group"><label for="sidangJurusan">Jurusan / Program Studi *</label><select id="sidangJurusan" required><option value="">-- Pilih Jurusan --</option><option>Psikologi</option><option>Bisnis &amp; Manajemen</option><option>Ilmu Komunikasi</option><option>Hukum</option><option>Sastra dan Bahasa Indonesia</option></select></div>
+      <div class="form-group"><label for="sidangJudul">Judul Tugas Akhir *</label><textarea id="sidangJudul" rows="3" maxlength="1000" required placeholder="Tuliskan judul lengkap Tugas Akhir / Skripsi"></textarea></div>
+      <div class="form-group"><label for="sidangPembimbing">Nama Dosen Pembina / Pembimbing *</label><input id="sidangPembimbing" type="text" maxlength="150" required placeholder="Masukkan nama dosen pembimbing"></div>
+      <div class="form-group">
+        <label>Pilih Hari dan Tanggal Sidang *</label>
+        <div class="schedule-help">Pilih satu tanggal. Setelah tanggal ditekan, pilihan jam akan muncul di bawahnya.</div>
+        <div class="date-grid" id="dateGrid">
+          <button type="button" class="date-card" data-date="Selasa, 16 Februari 2027"><span class="day">SELASA</span><span class="date">16</span><span class="month">FEB 2027</span></button>
+          <button type="button" class="date-card" data-date="Rabu, 17 Februari 2027"><span class="day">RABU</span><span class="date">17</span><span class="month">FEB 2027</span></button>
+          <button type="button" class="date-card" data-date="Kamis, 18 Februari 2027"><span class="day">KAMIS</span><span class="date">18</span><span class="month">FEB 2027</span></button>
+          <button type="button" class="date-card" data-date="Jumat, 19 Februari 2027"><span class="day">JUMAT</span><span class="date">19</span><span class="month">FEB 2027</span></button>
+          <button type="button" class="date-card" data-date="Sabtu, 20 Februari 2027"><span class="day">SABTU</span><span class="date">20</span><span class="month">FEB 2027</span></button>
+        </div>
+        <div class="time-area" id="timeArea"><label>Pilih Jam Sidang *</label><div class="time-grid"><button type="button" class="time-slot" data-time="19.00 - 20.00 WIB">19.00 - 20.00</button><button type="button" class="time-slot" data-time="20.00 - 21.00 WIB">20.00 - 21.00</button><button type="button" class="time-slot" data-time="21.00 - 22.00 WIB">21.00 - 22.00</button></div><div class="selected-schedule" id="selectedSchedule"></div></div>
+        <input type="hidden" id="sidangJadwal" required>
+      </div>
+      <div class="form-group"><label for="sidangFile">Berkas Tugas Akhir (PDF) *</label><input id="sidangFile" type="file" accept=".pdf,application/pdf" required><div class="sidang-file-hint">Berkas harus sudah disetujui dan ditandatangani Dosen Pembina. Format PDF, maksimal 10 MB.</div></div>
+      <button type="submit" id="sidangSubmitBtn">Kirim Pendaftaran Sidang</button>
+      <div id="sidangLoading" style="display:none;margin-top:12px;color:var(--primary);text-align:center">Mengirim pendaftaran...</div>
+      <div id="sidangStatus"></div><div class="required-note">* Semua kolom wajib diisi.</div>
+    </form>
+  </section>
 
 </div>
 
@@ -2239,6 +1975,68 @@ function finishSubmit() {
 
 }
 
+
+
+/* MENU PORTAL: hanya Usulan Dospem dan Pendaftaran Sidang */
+document.querySelectorAll('.portal-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.portal-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.portal-panel').forEach(p=>p.hidden=true);
+    tab.classList.add('active');document.getElementById(tab.dataset.panel).hidden=false;
+  });
+});
+
+/* PILIH TANGGAL, KEMUDIAN PILIH JAM DENGAN TOMBOL */
+let selectedDate='';
+const scheduleInput=document.getElementById('sidangJadwal');
+const timeArea=document.getElementById('timeArea');
+const selectedSchedule=document.getElementById('selectedSchedule');
+document.querySelectorAll('.date-card').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    selectedDate=btn.dataset.date;scheduleInput.value='';
+    document.querySelectorAll('.date-card').forEach(b=>b.classList.toggle('active',b===btn));
+    document.querySelectorAll('.time-slot').forEach(b=>b.classList.remove('active'));
+    selectedSchedule.classList.remove('show');timeArea.classList.add('show');
+  });
+});
+document.querySelectorAll('.time-slot').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.time-slot').forEach(b=>b.classList.toggle('active',b===btn));
+    scheduleInput.value=selectedDate+' | '+btn.dataset.time;
+    selectedSchedule.textContent='Jadwal terpilih: '+scheduleInput.value;
+    selectedSchedule.classList.add('show');
+  });
+});
+
+/* FORM SIDANG: kirim ke endpoint Apps Script yang sama */
+const sidangForm=document.getElementById('sidangForm');
+const sidangFile=document.getElementById('sidangFile');
+const sidangStatus=document.getElementById('sidangStatus');
+const sidangLoading=document.getElementById('sidangLoading');
+const sidangSubmitBtn=document.getElementById('sidangSubmitBtn');
+sidangForm.addEventListener('submit',function(event){
+  event.preventDefault();sidangStatus.className='';sidangStatus.textContent='';
+  if(!sidangForm.reportValidity())return;
+  if(!scheduleInput.value)return showSidangError('Pilih tanggal dan jam sidang terlebih dahulu.');
+  const file=sidangFile.files[0];
+  if(!file)return showSidangError('Silakan unggah berkas Tugas Akhir.');
+  if(file.size>10*1024*1024)return showSidangError('Ukuran PDF maksimal 10 MB.');
+  if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf'))return showSidangError('Berkas harus berformat PDF.');
+  sidangSubmitBtn.disabled=true;sidangLoading.style.display='block';sidangLoading.textContent='Membaca berkas PDF...';
+  const reader=new FileReader();
+  reader.onload=function(){
+    const payload={jenis:'pendaftaran_sidang',nama:document.getElementById('sidangNama').value.trim(),nim:document.getElementById('sidangNim').value.trim(),jurusan:document.getElementById('sidangJurusan').value,judul:document.getElementById('sidangJudul').value.trim(),pembimbing:document.getElementById('sidangPembimbing').value.trim(),jadwal:scheduleInput.value,fileName:file.name,fileType:file.type||'application/pdf',fileBase64:reader.result};
+    sidangLoading.textContent='Mengirim data ke Google Spreadsheet...';
+    fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
+    .then(r=>{if(!r.ok)throw new Error('Server HTTP '+r.status);return r.text();})
+    .then(raw=>{let result;try{result=JSON.parse(raw)}catch(e){throw new Error('Respons server tidak valid. Apps Script perlu ditambahkan handler pendaftaran sidang.')}if(result.status!=='success')throw new Error(result.message||'Pendaftaran gagal disimpan.');alert(result.message||'Pendaftaran sidang berhasil disimpan ke spreadsheet.');sidangForm.reset();selectedDate='';scheduleInput.value='';document.querySelectorAll('.date-card,.time-slot').forEach(b=>b.classList.remove('active'));timeArea.classList.remove('show');selectedSchedule.classList.remove('show');})
+    .catch(e=>showSidangError(e.message))
+    .finally(()=>{sidangSubmitBtn.disabled=false;sidangLoading.style.display='none';});
+  };
+  reader.onerror=function(){showSidangError('Berkas gagal dibaca browser.');sidangSubmitBtn.disabled=false;sidangLoading.style.display='none';};
+  reader.readAsDataURL(file);
+});
+function showSidangError(message){sidangStatus.textContent=message;sidangStatus.className='error';}
 
 </script>
 
