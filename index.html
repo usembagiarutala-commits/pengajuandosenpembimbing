@@ -1,731 +1,771 @@
+
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Akademik - Universitas Sembagi Arutala</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <meta charset="UTF-8">
+<style>
+:root{
+  --nav:#212529;
+  --page:#f6f7f8;
+  --panel:#fff;
+  --line:#d2d2d2;
+  --field:#e9ecef;
+  --text:#17365d;
+  --link:#06f;
+  --red:#8b0000;
+}
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+*{box-sizing:border-box}
 
-  <title>Portal Akademik - Universitas Sembagi Arutala</title>
+body{
+  margin:0;
+  background:var(--page);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:13px;
+}
 
+.topbar{
+  height:49px;
+  background:var(--nav);
+  color:#fff;
+  border-bottom:1px solid #111;
+}
 
-  <style>
-    :root {
-      --bg-color: #f7f3ef;
-      --card-bg: #fffdfa;
-      --primary: #8b5148;
-      --primary-hover: #744139;
-      --primary-soft: #f4e9e5;
-      --brown: #6f5548;
-      --border: #e6d9d1;
-      --text: #392f2b;
-      --muted: #8b7b73;
-      --danger: #a9443d;
-      --danger-bg: #fbefed;
-      --success: #54745d;
-      --success-bg: #edf3ec;
-      --shadow: 0 16px 42px rgba(83, 54, 43, .08);
-    }
+.topbar-inner{
+  max-width:1115px;
+  height:100%;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+}
 
-    * { box-sizing: border-box; }
+.topbar-title{font-size:14px;color:#fff}
+.user-menu{font-size:12px;color:#b9c9d9;text-transform:uppercase}
 
-    body {
-      min-height: 100vh;
-      margin: 0;
-      padding: 34px 18px 48px;
-      color: var(--text);
-      background:
-        radial-gradient(ellipse at 12% 0%, rgba(190, 143, 125, .13), transparent 34%),
-        radial-gradient(ellipse at 100% 16%, rgba(139, 81, 72, .08), transparent 30%),
-        var(--bg-color);
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
+.container{
+  width:calc(100% - 30px);
+  max-width:972px;
+  margin:5px auto 60px;
+  padding:6px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:5px;
+  box-shadow:none;
+}
 
-    .container {
-      width: 100%;
-      max-width: 760px;
-      margin: 12px auto;
-      padding: 34px 38px 38px;
-      background: var(--card-bg);
-      border: 1px solid rgba(230, 217, 209, .9);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-    }
+h1,.subtitle{display:none}
 
-    h2 {
-      margin: 0 0 7px;
-      color: var(--brown);
-      text-align: center;
-      font-size: 1.55rem;
-      font-weight: 750;
-      letter-spacing: -.035em;
-    }
+.portal-nav{
+  display:flex;
+  align-items:flex-end;
+  gap:0;
+  margin:0 -1px;
+  padding:0 6px;
+  border-bottom:1px solid var(--line);
+  background:#fafafa;
+  min-height:32px;
+}
 
-    .subtitle {
-      margin: 0 0 25px;
-      color: var(--muted);
-      text-align: center;
-      font-size: .92rem;
-      line-height: 1.6;
-    }
+.portal-tab{
+  padding:9px 13px 8px;
+  border:1px solid transparent;
+  border-bottom:0;
+  border-radius:5px 5px 0 0;
+  background:transparent;
+  color:var(--link);
+  font:inherit;
+  font-size:12px;
+  cursor:pointer;
+  white-space:nowrap;
+}
 
-    .portal-nav {
-      display: flex;
-      gap: 7px;
-      max-width: 100%;
-      margin: 0 auto 27px;
-      padding: 6px;
-      background: #f5eee9;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
+.portal-tab:hover{background:#f1f1f1}
 
-    .portal-tab {
-      flex: 1;
-      min-height: 44px;
-      padding: 11px 14px;
-      color: var(--brown);
-      background: transparent;
-      border: 0;
-      border-radius: 8px;
-      font: inherit;
-      font-size: .9rem;
-      font-weight: 650;
-      cursor: pointer;
-      transition: background .18s ease, color .18s ease, box-shadow .18s ease;
-    }
+.portal-tab.active{
+  position:relative;
+  top:1px;
+  color:var(--red);
+  background:#fff;
+  border-color:#d8d8d8;
+}
 
-    .portal-tab:hover { background: rgba(255,255,255,.7); }
-    .portal-tab.active {
-      color: #fffaf7;
-      background: var(--primary);
-      box-shadow: 0 3px 9px rgba(116, 65, 57, .18);
-    }
+.panel{padding:12px 6px 18px}
+.panel[hidden]{display:none!important}
 
-    .portal-panel[hidden] { display: none !important; }
-    .portal-panel > .subtitle { margin-bottom: 25px; }
+.form-group{
+  display:grid;
+  grid-template-columns:151px minmax(0,1fr);
+  align-items:start;
+  gap:10px;
+  margin:0 0 12px;
+}
 
-    .form-group { margin-bottom: 19px; }
+label{
+  display:block;
+  margin:8px 0 0;
+  color:#17365d;
+  font-size:12px;
+  font-weight:400;
+  line-height:1.45;
+}
 
-    label {
-      display: block;
-      margin-bottom: 7px;
-      color: #55443c;
-      font-size: .91rem;
-      font-weight: 650;
-    }
+input,select,textarea{
+  display:block;
+  width:100%;
+  min-height:30px;
+  padding:6px 9px;
+  color:#17365d;
+  background:var(--field);
+  border:1px solid #dce0e4;
+  border-radius:5px;
+  font:inherit;
+  font-size:12px;
+}
 
-    input[type="text"], input[type="number"], input[type="file"], textarea, select {
-      display: block;
-      width: 100%;
-      min-height: 45px;
-      padding: 11px 13px;
-      color: var(--text);
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      font-family: inherit;
-      font-size: .93rem;
-      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
-    }
+textarea{min-height:100px;resize:vertical}
 
-    input::placeholder, textarea::placeholder { color: #b2a49c; }
-    input[type="text"]:focus, input[type="number"]:focus, input[type="file"]:focus,
-    textarea:focus, select:focus {
-      outline: none;
-      border-color: #b77b70;
-      background: #fffefd;
-      box-shadow: 0 0 0 3px rgba(139, 81, 72, .11);
-    }
+input:focus,select:focus,textarea:focus{
+  outline:1px solid #9db9d5;
+  border-color:#9db9d5;
+  background:#f2f4f6;
+}
 
-    textarea { min-height: 100px; resize: vertical; line-height: 1.55; }
-    input[type="file"] { padding: 8px 10px; cursor: pointer; background: #fffdfa; }
-    input[type="file"]::file-selector-button {
-      margin-right: 10px;
-      padding: 8px 11px;
-      color: var(--primary);
-      background: var(--primary-soft);
-      border: 0;
-      border-radius: 6px;
-      font: inherit;
-      font-weight: 650;
-      cursor: pointer;
-    }
-    select:disabled { color: #aa9d96; background: #f5f1ee; cursor: not-allowed; }
+input::placeholder{color:#78899a}
 
-    .file-hint, .sidang-file-hint, .quota-info {
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: .8rem;
-      line-height: 1.55;
-    }
+input[type=file]{
+  padding:4px 8px;
+  min-height:30px;
+  cursor:pointer;
+}
 
-    button:not(.portal-tab):not(.date-card):not(.time-slot) {
-      min-height: 46px;
-      padding: 12px 17px;
-      color: #fffaf7;
-      background: var(--primary);
-      border: 0;
-      border-radius: 9px;
-      font-family: inherit;
-      font-size: .94rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
-    }
-    button:not(.portal-tab):not(.date-card):not(.time-slot):hover:not(:disabled) {
-      background: var(--primary-hover);
-      box-shadow: 0 5px 12px rgba(116, 65, 57, .16);
-      transform: translateY(-1px);
-    }
-    button:disabled { opacity: .6; cursor: not-allowed; }
-    #submitBtn, #sidangSubmitBtn { width: 100%; margin-top: 4px; }
+input[type=file]::file-selector-button{
+  margin:-3px 8px -3px -4px;
+  padding:6px 9px;
+  color:#17365d;
+  background:#f5f6f7;
+  border:0;
+  border-right:1px solid #ccd2d8;
+  font:inherit;
+  cursor:pointer;
+}
 
-    .required-note {
-      margin-top: 15px;
-      color: var(--muted);
-      text-align: center;
-      font-size: .78rem;
-    }
+select:disabled{
+  color:#888;
+  background:#e9ecef;
+  cursor:not-allowed;
+}
 
-    #loading, #sidangLoading {
-      margin-top: 13px;
-      color: var(--primary);
-      text-align: center;
-      font-size: .88rem;
-      line-height: 1.5;
-    }
+.hint{
+  grid-column:2;
+  margin:-7px 0 0;
+  color:#6c757d;
+  font-size:11px;
+  line-height:1.4;
+}
 
-    #status, #sidangStatus {
-      display: none;
-      margin-top: 15px;
-      padding: 12px 14px;
-      border: 1px solid #e8c4bd;
-      border-radius: 9px;
-      color: var(--danger);
-      background: var(--danger-bg);
-      font-size: .88rem;
-      line-height: 1.55;
-    }
-    #status.error, #sidangStatus.error { display: block; }
+.required-note{
+  grid-column:2;
+  margin:2px 0 0;
+  color:#6c757d;
+  font-size:11px;
+}
 
-    .schedule-help {
-      margin: 0 0 14px;
-      padding: 12px 14px;
-      color: #765b50;
-      background: #f7f0eb;
-      border: 1px solid #eee0d7;
-      border-radius: 9px;
-      font-size: .84rem;
-      line-height: 1.55;
-    }
+.primary-btn{
+  grid-column:2;
+  width:auto;
+  justify-self:start;
+  min-height:32px;
+  margin:4px 0 0;
+  padding:7px 14px;
+  color:#fff;
+  background:#286090;
+  border:1px solid #204d74;
+  border-radius:4px;
+  font:inherit;
+  font-size:12px;
+  cursor:pointer;
+}
 
-    .date-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 9px;
-      margin: 0 0 18px;
-    }
-    .date-card {
-      min-width: 0;
-      padding: 13px 5px;
-      color: var(--text);
-      text-align: center;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: border-color .18s ease, background .18s ease, transform .18s ease;
-    }
-    .date-card:hover { border-color: #c99a8e; background: #fdf8f5; transform: translateY(-2px); }
-    .date-card .day, .date-card .month {
-      display: block;
-      color: var(--muted);
-      font-size: .69rem;
-      font-weight: 650;
-      letter-spacing: .045em;
-    }
-    .date-card .date { display: block; margin: 5px 0; color: var(--brown); font-size: 1.3rem; font-weight: 800; }
-    .date-card.active {
-      padding: 12px 4px;
-      color: var(--primary);
-      background: var(--primary-soft);
-      border: 2px solid var(--primary);
-      box-shadow: 0 3px 9px rgba(139, 81, 72, .09);
-    }
-    .date-card.active .day, .date-card.active .month { color: var(--primary); }
+.primary-btn:hover:not(:disabled){background:#204d74}
+button:disabled{opacity:.6;cursor:not-allowed}
 
-    .time-area { display: none; margin: 7px 0 19px; padding: 16px; background: #fbf7f4; border: 1px solid #eee2db; border-radius: 11px; }
-    .time-area.show { display: block; }
-    .time-area > label { margin-bottom: 11px; }
-    .time-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
-    .time-slot {
-      min-height: 45px;
-      padding: 11px 8px;
-      color: var(--brown);
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font: inherit;
-      font-size: .84rem;
-      font-weight: 650;
-      cursor: pointer;
-      transition: all .18s ease;
-    }
-    .time-slot:hover { border-color: #c99a8e; background: #fffaf7; }
-    .time-slot.active {
-      color: #fffaf7;
-      background: var(--primary);
-      border: 1px solid var(--primary);
-      box-shadow: 0 3px 9px rgba(139, 81, 72, .16);
-    }
-    .selected-schedule {
-      display: none;
-      margin-top: 13px;
-      padding: 11px 13px;
-      color: #5d705c;
-      background: var(--success-bg);
-      border: 1px solid #dce8d9;
-      border-radius: 8px;
-      font-size: .86rem;
-      font-weight: 650;
-      line-height: 1.5;
-    }
-    .selected-schedule.show { display: block; }
+.status{
+  display:none;
+  grid-column:2;
+  margin-top:3px;
+  padding:9px 11px;
+  border:1px solid #e2b9b9;
+  border-radius:4px;
+  color:#842029;
+  background:#f8d7da;
+  font-size:12px;
+  line-height:1.5;
+}
 
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      background: rgba(48, 35, 30, .48);
-      backdrop-filter: blur(3px);
-    }
-    .modal-overlay.show { display: flex; }
-    .success-modal {
-      width: 100%;
-      max-width: 430px;
-      padding: 30px 26px;
-      text-align: center;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 18px 55px rgba(48, 35, 30, .22);
-      animation: modalAppear .22s ease-out;
-    }
-    @keyframes modalAppear { from { opacity: 0; transform: translateY(8px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    .success-icon {
-      display: flex;
-      width: 62px;
-      height: 62px;
-      margin: 0 auto 15px;
-      align-items: center;
-      justify-content: center;
-      color: var(--success);
-      background: var(--success-bg);
-      border-radius: 50%;
-      font-size: 35px;
-      font-weight: 700;
-    }
-    .success-modal h3 { margin: 0 0 10px; color: var(--brown); font-size: 1.3rem; }
-    .success-modal p { margin: 0 0 23px; color: var(--muted); font-size: .92rem; line-height: 1.6; }
-    .modal-button { width: 100%; }
+.status.show{display:block}
 
-    @media (max-width: 600px) {
-      body { padding: 16px 10px 28px; }
-      .container { margin: 0 auto; padding: 25px 18px 27px; border-radius: 14px; }
-      h2 { font-size: 1.3rem; }
-      .portal-nav { gap: 4px; margin-bottom: 22px; }
-      .portal-tab { min-height: 42px; padding: 10px 6px; font-size: .78rem; }
-      .date-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .time-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 360px) {
-      .portal-tab { font-size: .72rem; }
-      .date-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
+.status.ok{
+  color:#0f5132;
+  background:#d1e7dd;
+  border-color:#badbcc;
+}
 
+.schedule-help{
+  grid-column:2;
+  margin:0 0 4px;
+  padding:9px 11px;
+  color:#495057;
+  background:#f3f4f5;
+  border:1px solid #d9dde1;
+  border-radius:4px;
+  font-size:11px;
+  line-height:1.5;
+}
 
-  </style>
+.date-grid{
+  grid-column:2;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:7px;
+  margin:0 0 5px;
+}
 
+.date-card{
+  padding:7px 4px;
+  color:#17365d;
+  text-align:center;
+  background:var(--field);
+  border:1px solid #dce0e4;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.date-card .day,.date-card .month{
+  display:block;
+  color:#68798a;
+  font-size:10px;
+}
+
+.date-card .date{
+  display:block;
+  margin:3px 0;
+  font-size:14px;
+  font-weight:700;
+}
+
+.date-card.active{
+  background:#dce8f4;
+  border:1px solid #4779a8;
+}
+
+.date-card:disabled,.time-slot:disabled{
+  color:#999;
+  background:#e4e4e4;
+  border-color:#d7d7d7;
+  cursor:not-allowed;
+  text-decoration:line-through;
+}
+
+.time-area{
+  display:none;
+  grid-column:2;
+  margin:2px 0 4px;
+  padding:9px;
+  background:#f8f9fa;
+  border:1px solid #ddd;
+  border-radius:4px;
+}
+
+.time-area.show{display:block}
+.time-area>label{margin:0 0 7px}
+
+.time-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px;
+}
+
+.time-slot{
+  min-height:30px;
+  padding:6px;
+  color:#17365d;
+  background:var(--field);
+  border:1px solid #dce0e4;
+  border-radius:4px;
+  font:inherit;
+  font-size:11px;
+  cursor:pointer;
+}
+
+.time-slot.active{
+  background:#dce8f4;
+  border-color:#4779a8;
+}
+
+.selected-schedule{
+  display:none;
+  margin-top:7px;
+  padding:7px;
+  color:#245b35;
+  background:#e6f1e8;
+  border:1px solid #cbdccc;
+  border-radius:4px;
+  font-size:11px;
+}
+
+.selected-schedule.show{display:block}
+
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.45);
+}
+
+.modal-overlay.show{display:flex}
+
+.success-modal{
+  width:100%;
+  max-width:400px;
+  padding:25px;
+  text-align:center;
+  background:#fff;
+  border:1px solid #ccc;
+  border-radius:5px;
+}
+
+.success-icon{
+  display:flex;
+  width:48px;
+  height:48px;
+  margin:0 auto 12px;
+  align-items:center;
+  justify-content:center;
+  color:#286090;
+  background:#e9ecef;
+  border-radius:50%;
+  font-size:28px;
+}
+
+.success-modal h2{margin:0 0 8px;font-size:20px}
+.success-modal p{margin:0 0 16px;line-height:1.5}
+
+@media(max-width:620px){
+  .topbar-inner{padding:0 15px}
+  .container{
+    width:calc(100% - 16px);
+    margin-top:6px;
+  }
+  .panel{padding:10px 4px 15px}
+  .form-group{
+    grid-template-columns:1fr;
+    gap:4px;
+    margin-bottom:11px;
+  }
+  label{margin:0 0 2px}
+  .hint,.required-note,.schedule-help,.date-grid,
+  .time-area,.status,.primary-btn{grid-column:1}
+  .hint{margin-top:-1px}
+  .portal-nav{overflow-x:auto}
+  .portal-tab{padding:8px 9px;font-size:11px}
+  .date-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .time-grid{grid-template-columns:1fr}
+}
+
+/* =========================================
+   TEMA BARU: EARTHY BROWN, CREAM & RED
+========================================= */
+:root{
+  --nav:#1E1B1B;
+  --page:#FAF8F5;
+  --panel:#FFFFFF;
+  --line:#E7DED2;
+  --field:#F6F0E7;
+  --text:#1E1B1B;
+  --link:#6D3C11;
+  --red:#C42E2E;
+  --brown:#6D3C11;
+  --beige:#CFAB79;
+  --gold:#EDB34F;
+  --cream:#F6F0E7;
+  --soft:#FAF8F5;
+}
+body{
+  background:var(--page);
+  color:var(--text);
+  font-family:"Space Grotesk",Arial,sans-serif;
+  font-size:14px;
+}
+.topbar{
+  height:60px;
+  background:var(--nav);
+  border-bottom:3px solid var(--beige);
+}
+.topbar-title{
+  font-family:"EB Garamond",Georgia,serif;
+  font-size:23px;
+  font-weight:600;
+  letter-spacing:.2px;
+}
+.user-menu{color:#E8D9C7;font-size:11px;letter-spacing:.6px}
+.container{
+  max-width:1000px;
+  margin:22px auto 60px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:0 8px 28px rgba(30,27,27,.06);
+}
+.portal-nav{
+  gap:6px;
+  padding:0 4px 8px;
+  background:transparent;
+  border-bottom:1px solid var(--line);
+  overflow-x:auto;
+}
+.portal-tab{
+  padding:11px 15px;
+  border-radius:9px;
+  color:var(--brown);
+  font-weight:600;
+  font-size:13px;
+}
+.portal-tab:hover{background:var(--cream)}
+.portal-tab.active{
+  top:0;
+  color:#fff;
+  background:var(--brown);
+  border-color:var(--brown);
+}
+.panel{padding:22px 12px 24px}
+.form-group{grid-template-columns:190px minmax(0,1fr);gap:16px;margin-bottom:17px}
+label{margin:10px 0 0;color:#3A3028;font-weight:600;font-size:13px}
+input,select,textarea{
+  min-height:42px;
+  padding:10px 12px;
+  color:var(--text);
+  background:var(--cream);
+  border:1px solid #E4D8C8;
+  border-radius:8px;
+  font-family:inherit;
+  font-size:13px;
+}
+textarea{min-height:110px}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid rgba(207,171,121,.35);
+  border-color:var(--beige);
+  background:#fff;
+}
+input::placeholder{color:#958879}
+select:disabled{color:#8E877F;background:#F0ECE6}
+.hint,.required-note{color:#82776B;font-size:11px}
+.primary-btn{
+  min-height:42px;
+  padding:10px 18px;
+  color:#fff;
+  background:var(--red);
+  border:1px solid var(--red);
+  border-radius:8px;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:600;
+  transition:background .2s,transform .2s;
+}
+.primary-btn:hover:not(:disabled){background:#A92323;transform:translateY(-1px)}
+.status{border-radius:8px}
+.status.ok{color:#285B3B;background:#EDF5EC;border-color:#C9DEC8}
+.schedule-help{
+  padding:12px 14px;
+  color:#665746;
+  background:var(--cream);
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-size:12px;
+}
+.date-card,.time-slot{
+  border-radius:8px;
+  background:var(--cream);
+  border-color:#E4D8C8;
+  font-family:inherit;
+}
+.date-card.active,.time-slot.active{
+  color:var(--brown);
+  background:#F0E2CF;
+  border:1px solid var(--brown);
+}
+.time-area{border-radius:10px;background:#FCFAF7;border-color:var(--line)}
+.selected-schedule{border-radius:8px;color:#315C3A;background:#EDF5EC;border-color:#C9DEC8}
+.success-modal{border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 60px rgba(30,27,27,.2)}
+.success-icon{color:var(--brown);background:var(--cream)}
+.success-modal h2{font-family:"EB Garamond",Georgia,serif;font-size:28px}
+.quota-note{
+  grid-column:2;
+  margin:-8px 0 2px;
+  color:#786B5C;
+  font-size:11px;
+  line-height:1.5;
+}
+.quota-note strong{color:var(--brown)}
+.refresh-schedule-btn{
+  grid-column:2;
+  justify-self:start;
+  margin:0 0 9px;
+  padding:8px 12px;
+  color:var(--brown);
+  background:#fff;
+  border:1px solid var(--beige);
+  border-radius:8px;
+  font:inherit;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+}
+.refresh-schedule-btn:hover:not(:disabled){background:var(--cream)}
+.refresh-schedule-btn:disabled{opacity:.6;cursor:wait}
+select option:disabled{color:#A49A90}
+@media(max-width:620px){
+  .topbar{height:56px}
+  .topbar-inner{padding:0 14px}
+  .topbar-title{font-size:21px}
+  .user-menu{font-size:9px}
+  .container{
+    width:calc(100% - 20px);
+    margin:12px auto 28px;
+    padding:8px;
+    border-radius:12px;
+  }
+  .portal-nav{margin:0;padding:0 0 7px;align-items:stretch}
+  .portal-tab{flex:0 0 auto;padding:10px 12px;font-size:11px}
+  .panel{padding:16px 5px 18px}
+  .form-group{grid-template-columns:1fr;gap:6px;margin-bottom:15px}
+  label{margin:0 0 1px;font-size:12px}
+  input,select,textarea{min-height:44px;font-size:14px}
+  .hint,.required-note,.schedule-help,.date-grid,.time-area,.status,.primary-btn,.quota-note,.refresh-schedule-btn{grid-column:1}
+  .hint{margin-top:0}
+  .quota-note{margin:-3px 0 0}
+  .primary-btn{width:100%;justify-self:stretch}
+  .date-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .time-grid{grid-template-columns:1fr}
+  .success-modal{padding:22px 18px}
+}
+@media(min-width:621px) and (max-width:820px){
+  .container{width:calc(100% - 28px)}
+  .form-group{grid-template-columns:155px minmax(0,1fr)}
+}
+</style>
 </head>
-
 
 <body>
 
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-title">Dashboard</div>
+    <div class="user-menu">MAHASISWA UNSEMA &#9662;</div>
+  </div>
+</header>
 
-<div class="container">
-
-
-  <h2>
-    Universitas Sembagi Arutala
-  </h2>
-
-
-  <p class="subtitle">Portal Layanan Akademik Tugas Akhir</p>
+<main class="container">
 
   <nav class="portal-nav" aria-label="Menu layanan akademik">
-    <button type="button" class="portal-tab active" data-panel="usulanPanel">Usulan Dospem</button>
-    <button type="button" class="portal-tab" data-panel="sidangPanel">Pendaftaran Sidang</button>
+    <button type="button" class="portal-tab active" data-panel="dospemPanel">
+      Pendaftaran Dosen Pembimbing
+    </button>
+    <button type="button" class="portal-tab" data-panel="sidangPanel">
+      Pendaftaran Sidang
+    </button>
   </nav>
 
-  <section id="usulanPanel" class="portal-panel">
-  <p class="subtitle">Formulir Pengajuan Dosen Pembimbing Tugas Akhir</p>
-  <form id="pengajuanForm">
+  <!-- PENDAFTARAN DOSEN PEMBIMBING -->
+  <section id="dospemPanel" class="panel">
 
+    <form id="dospemForm">
 
-    <!-- ==================================================
-         NIM
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="nim">
-        NIM *
-      </label>
-
-      <input
-        type="text"
-        id="nim"
-        maxlength="50"
-        required
-        autocomplete="off"
-        placeholder="Masukkan NIM Anda"
-      >
-
-    </div>
-
-
-    <!-- ==================================================
-         NAMA
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="nama">
-        NAMA *
-      </label>
-
-      <input
-        type="text"
-        id="nama"
-        maxlength="150"
-        required
-        autocomplete="name"
-        placeholder="Masukkan Nama Lengkap"
-      >
-
-    </div>
-
-
-    <!-- ==================================================
-         USERNAME
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="username">
-        USERNAME *
-      </label>
-
-      <input
-        type="text"
-        id="username"
-        maxlength="100"
-        required
-        autocomplete="username"
-        placeholder="Masukkan Username Sistem"
-      >
-
-    </div>
-
-
-    <!-- ==================================================
-         PROGRAM STUDI
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="prodi">
-        PROGRAM STUDI *
-      </label>
-
-      <select
-        id="prodi"
-        required
-      >
-
-        <option value="">
-          -- Pilih Program Studi --
-        </option>
-
-        <option value="Psikologi">
-          Psikologi (S.Psi)
-        </option>
-
-        <option value="Bisnis & Manajemen">
-          Bisnis & Manajemen (S.Bns)
-        </option>
-
-        <option value="Ilmu Komunikasi">
-          Ilmu Komunikasi (S.I.Kom)
-        </option>
-
-        <option value="Hukum">
-          Hukum (S.H)
-        </option>
-
-        <option value="Sastra dan Bahasa Indonesia">
-          Sastra dan Bahasa Indonesia (S.S)
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <!-- ==================================================
-         JUDUL
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="judul">
-        JUDUL *
-      </label>
-
-      <input
-        type="text"
-        id="judul"
-        maxlength="500"
-        required
-        placeholder="Judul Proposal / Tugas Akhir"
-      >
-
-    </div>
-
-
-    <!-- ==================================================
-         RUMUSAN MASALAH
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="rumusan">
-        RUMUSAN MASALAH *
-      </label>
-
-      <textarea
-        id="rumusan"
-        rows="4"
-        maxlength="3000"
-        required
-        placeholder="Tuliskan ringkasan rumusan masalah"
-      ></textarea>
-
-    </div>
-
-
-    <!-- ==================================================
-         TOPIK
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="topik">
-        TOPIK *
-      </label>
-
-      <input
-        type="text"
-        id="topik"
-        maxlength="300"
-        required
-        placeholder="Contoh: Psikologi Sosial / Manajemen Strategis / Hukum Pidana"
-      >
-
-    </div>
-
-
-    <!-- ==================================================
-         DOSEN PEMBIMBING
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="dosen">
-        DOSEN PEMBIMBING *
-      </label>
-
-      <select
-        id="dosen"
-        required
-        disabled
-      >
-
-        <option value="">
-          -- Pilih Program Studi Terlebih Dahulu --
-        </option>
-
-      </select>
-
-
-      <div
-        id="quotaInfo"
-        class="quota-info"
-      ></div>
-
-    </div>
-
-
-    <!-- ==================================================
-         DOKUMEN
-    ================================================== -->
-
-    <div class="form-group">
-
-      <label for="dokumen">
-
-        DOKUMEN FORMULIR PENGAJUAN
-        (PDF / DOC / DOCX) *
-
-      </label>
-
-
-      <input
-        type="file"
-        id="dokumen"
-        accept=".pdf,.doc,.docx"
-        required
-      >
-
-
-      <div class="file-hint">
-
-        Format:
-        PDF, DOC, atau DOCX.
-        Ukuran maksimal 5 MB.
-
-      </div>
-
-    </div>
-
-
-    <!-- ==================================================
-         SUBMIT
-    ================================================== -->
-
-    <button
-      type="submit"
-      id="submitBtn"
-    >
-      Kirim Pengajuan
-    </button>
-
-
-    <!-- ==================================================
-         LOADING
-    ================================================== -->
-
-    <div id="loading">
-
-      Memproses data dan mengunggah dokumen
-      ke Google Drive...
-
-    </div>
-
-
-    <!-- ==================================================
-         ERROR
-    ================================================== -->
-
-    <div id="status"></div>
-
-
-    <div class="required-note">
-
-      * Semua field wajib diisi.
-
-    </div>
-
-
-  </form>
-  </section>
-
-  <section id="sidangPanel" class="portal-panel" hidden>
-    <p class="subtitle">Formulir Pendaftaran Sidang Tugas Akhir / Skripsi</p>
-    <form id="sidangForm">
-      <div class="form-group"><label for="sidangNama">Nama Lengkap *</label><input id="sidangNama" type="text" maxlength="150" required placeholder="Masukkan nama lengkap"></div>
-      <div class="form-group"><label for="sidangNim">NIM *</label><input id="sidangNim" type="text" maxlength="50" required placeholder="Masukkan NIM"></div>
-      <div class="form-group"><label for="sidangJurusan">Jurusan / Program Studi *</label><select id="sidangJurusan" required><option value="">-- Pilih Jurusan --</option><option>Psikologi</option><option>Bisnis &amp; Manajemen</option><option>Ilmu Komunikasi</option><option>Hukum</option><option>Sastra dan Bahasa Indonesia</option></select></div>
-      <div class="form-group"><label for="sidangJudul">Judul Tugas Akhir *</label><textarea id="sidangJudul" rows="3" maxlength="1000" required placeholder="Tuliskan judul lengkap Tugas Akhir / Skripsi"></textarea></div>
-      <div class="form-group"><label for="sidangPembimbing">Nama Dosen Pembina / Pembimbing *</label><input id="sidangPembimbing" type="text" maxlength="150" required placeholder="Masukkan nama dosen pembimbing"></div>
       <div class="form-group">
-        <label>Pilih Hari dan Tanggal Sidang *</label>
-        <div class="schedule-help">Pilih satu tanggal. Setelah tanggal ditekan, pilihan jam akan muncul di bawahnya.</div>
-        <div class="date-grid" id="dateGrid">
-          <button type="button" class="date-card" data-date="Selasa, 16 Februari 2027"><span class="day">SELASA</span><span class="date">16</span><span class="month">FEB 2027</span></button>
-          <button type="button" class="date-card" data-date="Rabu, 17 Februari 2027"><span class="day">RABU</span><span class="date">17</span><span class="month">FEB 2027</span></button>
-          <button type="button" class="date-card" data-date="Kamis, 18 Februari 2027"><span class="day">KAMIS</span><span class="date">18</span><span class="month">FEB 2027</span></button>
-          <button type="button" class="date-card" data-date="Jumat, 19 Februari 2027"><span class="day">JUMAT</span><span class="date">19</span><span class="month">FEB 2027</span></button>
-          <button type="button" class="date-card" data-date="Sabtu, 20 Februari 2027"><span class="day">SABTU</span><span class="date">20</span><span class="month">FEB 2027</span></button>
-        </div>
-        <div class="time-area" id="timeArea"><label>Pilih Jam Sidang *</label><div class="time-grid"><button type="button" class="time-slot" data-time="19.00 - 20.00 WIB">19.00 - 20.00</button><button type="button" class="time-slot" data-time="20.00 - 21.00 WIB">20.00 - 21.00</button><button type="button" class="time-slot" data-time="21.00 - 22.00 WIB">21.00 - 22.00</button></div><div class="selected-schedule" id="selectedSchedule"></div></div>
-        <input type="hidden" id="sidangJadwal" required>
+        <label for="dNim">NIM *</label>
+        <input id="dNim" type="text" maxlength="50" required placeholder="Masukkan NIM">
       </div>
-      <div class="form-group"><label for="sidangFile">Berkas Tugas Akhir (PDF) *</label><input id="sidangFile" type="file" accept=".pdf,application/pdf" required><div class="sidang-file-hint">Berkas harus sudah disetujui dan ditandatangani Dosen Pembina. Format PDF, maksimal 10 MB.</div></div>
-      <button type="submit" id="sidangSubmitBtn">Kirim Pendaftaran Sidang</button>
-      <div id="sidangLoading" style="display:none;margin-top:12px;color:var(--primary);text-align:center">Mengirim pendaftaran...</div>
-      <div id="sidangStatus"></div><div class="required-note">* Semua kolom wajib diisi.</div>
+
+      <div class="form-group">
+        <label for="dNama">Nama *</label>
+        <input id="dNama" type="text" maxlength="150" required placeholder="Masukkan nama lengkap">
+      </div>
+
+      <div class="form-group">
+        <label for="dJurusan">Jurusan *</label>
+        <select id="dJurusan" required>
+          <option value="">-- Pilih Jurusan --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dTopik">Topik *</label>
+        <input id="dTopik" type="text" maxlength="500" required placeholder="Masukkan topik Tugas Akhir">
+      </div>
+
+      <div class="form-group">
+        <label for="dDosen">Dosen Pembimbing *</label>
+        <select id="dDosen" required disabled>
+          <option value="">-- Pilih jurusan terlebih dahulu --</option>
+        </select>
+        <div class="quota-note" id="dQuotaNote">
+          Kuota setiap dosen maksimal <strong>5 mahasiswa</strong>. Pilihan dan jumlah kuota diperbarui otomatis.
+        </div>
+        <div class="hint">Dosen dengan kuota penuh (5/5) tidak dapat dipilih.</div>
+      </div>
+
+      <button class="primary-btn" id="dSubmit" type="submit">
+        Kirim Pendaftaran
+      </button>
+
+      <div class="status" id="dStatus" role="status"></div>
+      <div class="required-note">* Semua kolom wajib diisi.</div>
+
     </form>
   </section>
 
-</div>
+  <!-- PENDAFTARAN SIDANG -->
+  <section id="sidangPanel" class="panel" hidden>
 
+    <form id="sidangForm">
 
-<!-- ======================================================
-     POPUP SUKSES
-====================================================== -->
+      <div class="form-group">
+        <label for="sNim">NIM *</label>
+        <input id="sNim" type="text" maxlength="50" required placeholder="Masukkan NIM">
+      </div>
 
-<div
-  id="successModal"
-  class="modal-overlay"
->
+      <div class="form-group">
+        <label for="sNama">Nama Lengkap *</label>
+        <input id="sNama" type="text" maxlength="150" required placeholder="Masukkan nama lengkap">
+      </div>
+
+      <div class="form-group">
+        <label for="sJurusan">Jurusan *</label>
+        <select id="sJurusan" required>
+          <option value="">-- Pilih Jurusan --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sJudul">Judul Tugas Akhir *</label>
+        <input id="sJudul" type="text" maxlength="1000" required placeholder="Tuliskan judul lengkap Tugas Akhir">
+      </div>
+
+      <div class="form-group">
+        <label for="sDosen">Dosen Pembimbing *</label>
+        <select id="sDosen" required disabled>
+          <option value="">-- Pilih jurusan terlebih dahulu --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+
+        <label>Pilihan Hari dan Jam Sidang *</label>
+
+        <div class="schedule-help">
+          Pilih jurusan terlebih dahulu untuk melihat ketersediaan jadwal.
+          Setiap sesi berdurasi 40 menit, dimulai pukul 19.00 WIB.
+          Slot yang sudah dipesan pada jurusan dan tanggal yang sama akan dinonaktifkan.
+        </div>
+
+        <button type="button" class="refresh-schedule-btn" id="refreshScheduleBtn">
+          ↻ Perbarui Ketersediaan Jadwal
+        </button>
+
+        <div class="date-grid" id="dateGrid">
+
+          <button type="button" class="date-card" data-date="2027-02-16">
+            <span class="day">SELASA</span>
+            <span class="date">16</span>
+            <span class="month">FEB 2027</span>
+          </button>
+
+          <button type="button" class="date-card" data-date="2027-02-17">
+            <span class="day">RABU</span>
+            <span class="date">17</span>
+            <span class="month">FEB 2027</span>
+          </button>
+
+          <button type="button" class="date-card" data-date="2027-02-18">
+            <span class="day">KAMIS</span>
+            <span class="date">18</span>
+            <span class="month">FEB 2027</span>
+          </button>
+
+          <button type="button" class="date-card" data-date="2027-02-19">
+            <span class="day">JUMAT</span>
+            <span class="date">19</span>
+            <span class="month">FEB 2027</span>
+          </button>
+
+          <button type="button" class="date-card" data-date="2027-02-20">
+            <span class="day">SABTU</span>
+            <span class="date">20</span>
+            <span class="month">FEB 2027</span>
+          </button>
+
+        </div>
+
+        <div class="time-area" id="timeArea">
+          <label>Pilih Jam Sidang *</label>
+          <div class="time-grid" id="timeGrid"></div>
+          <div class="selected-schedule" id="selectedSchedule"></div>
+        </div>
+
+        <input type="hidden" id="sJadwal" required>
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="sFile">
+          Unggah Berkas Tugas Akhir yang Telah Disetujui dan Ditandatangani Dosen Pembimbing *
+        </label>
+
+        <input id="sFile" type="file" accept=".pdf,application/pdf" required>
+
+        <div class="hint">
+          Format PDF, maksimal 10 MB. Pastikan berkas sudah mendapat persetujuan dan tanda tangan dosen pembimbing.
+        </div>
+
+      </div>
+
+      <button class="primary-btn" id="sSubmit" type="submit">
+        Kirim Pendaftaran Sidang
+      </button>
+
+      <div class="status" id="sStatus" role="status"></div>
+      <div class="required-note">* Semua kolom wajib diisi.</div>
+
+    </form>
+  </section>
+
+</main>
+
+<!-- MODAL BERHASIL -->
+<div class="modal-overlay" id="successModal" role="dialog" aria-modal="true">
 
   <div class="success-modal">
 
-    <div class="success-icon">
-      ✓
-    </div>
+    <div class="success-icon">✓</div>
 
+    <h2>Pendaftaran Berhasil!</h2>
 
-    <h3>
-      Pengajuan Berhasil!
-    </h3>
+    <p id="successMessage">Data berhasil disimpan.</p>
 
-
-    <p id="successMessage">
-
-      Pengajuan dosen pembimbing
-      berhasil dikirim.
-
-    </p>
-
-
-    <button
-      type="button"
-      id="closeModalBtn"
-      class="modal-button"
-    >
-      OK
-    </button>
+    <button class="primary-btn" id="closeModal">OK</button>
 
   </div>
 
@@ -734,1313 +774,817 @@
 
 <script>
 
+/* =========================================
+   1. KONFIGURASI GOOGLE APPS SCRIPT
+========================================= */
 
-/* =====================================================
-   URL GOOGLE APPS SCRIPT WEB APP
-===================================================== */
+// Spreadsheet Pendaftaran Dosen Pembimbing
+const DOSPEM_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpWXf_g0-sR2puUVXyH3WjFBTkH_vlCEkffTM83Dhl_uM3Ze4X4JPSKJ1qtSHYVsJ_/exechttps://script.google.com/macros/s/AKfycbzpWXf_g0-sR2puUVXyH3WjFBTkH_vlCEkffTM83Dhl_uM3Ze4X4JPSKJ1qtSHYVsJ_/exec";
 
-const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzD98k3zA03YYTYy3JNZ80tyeCUJhYX3dgMY_bA2qvZfr2OyK38OVLqErQsnGAA5co9/exec";
-
-
-/* =====================================================
-   KONFIGURASI
-===================================================== */
-
-const MAX_KUOTA = 10;
-
-const MAX_FILE_SIZE =
-  5 * 1024 * 1024;
+// Spreadsheet Pendaftaran Sidang
+const SIDANG_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2YBbGjcTQE-wv5cuhPZrVytce0565OvuV8EZ-Wvyn-2vPUb7bGQQl-y9mlZF3GzAGww/exechttps://script.google.com/macros/s/AKfycbxcZ5J2sPB1RO-Jk2MG_r8dsoUwNvaUkUxXSBJDNjibO_NIgO-IT1iYSMsepJxVFqDmZA/exec";
 
 
-/* =====================================================
-   MASTER DOSEN
-===================================================== */
+/* =========================================
+   2. DATA PROGRAM STUDI UNSEMA
+========================================= */
 
-const masterDosen = [
-
-  /* PSIKOLOGI */
-
-  {
-    prodi: "Psikologi",
-    nama: "Dosen 1"
-  },
-
-  {
-    prodi: "Psikologi",
-    nama: "Dosen 2"
-  },
-
-  {
-    prodi: "Psikologi",
-    nama: "Dosen 3"
-  },
-
-
-  /* BISNIS & MANAJEMEN */
-
-  {
-    prodi: "Bisnis & Manajemen",
-    nama: "Dosen 1"
-  },
-
-  {
-    prodi: "Bisnis & Manajemen",
-    nama: "Dosen 2"
-  },
-
-  {
-    prodi: "Bisnis & Manajemen",
-    nama: "Dosen 3"
-  },
-
-
-  /* ILMU KOMUNIKASI */
-
-  {
-    prodi: "Ilmu Komunikasi",
-    nama: "Dosen 1"
-  },
-
-  {
-    prodi: "Ilmu Komunikasi",
-    nama: "Dosen 2"
-  },
-
-  {
-    prodi: "Ilmu Komunikasi",
-    nama: "Dosen 3"
-  },
-
-
-  /* HUKUM */
-
-  {
-    prodi: "Hukum",
-    nama: "Dosen 1"
-  },
-
-  {
-    prodi: "Hukum",
-    nama: "Dosen 2"
-  },
-
-  {
-    prodi: "Hukum",
-    nama: "Dosen 3"
-  },
-
-
-  /* SASTRA DAN BAHASA INDONESIA */
-
-  {
-    prodi: "Sastra dan Bahasa Indonesia",
-    nama: "Dosen 1"
-  },
-
-  {
-    prodi: "Sastra dan Bahasa Indonesia",
-    nama: "Dosen 2"
-  },
-
-  {
-    prodi: "Sastra dan Bahasa Indonesia",
-    nama: "Dosen 3"
-  }
-
+const JURUSAN = [
+  "Psikologi",
+  "Bisnis & Manajemen",
+  "Ilmu Komunikasi",
+  "Hukum",
+  "Sastra Indonesia"
 ];
 
 
-/* =====================================================
-   VARIABEL
-===================================================== */
+/* =========================================
+   3. DATA DOSEN SETIAP PROGRAM STUDI
+   Masing-masing program studi memiliki 3 dosen.
+========================================= */
 
-let countDosenTerisi = {};
+const dosenByJurusan = {
 
-let isSubmitting = false;
+  "Psikologi": [
+    "Dosen Psikologi 1",
+    "Dosen Psikologi 2",
+    "Dosen Psikologi 3"
+  ],
 
+  "Bisnis & Manajemen": [
+    "Dosen Bisnis & Manajemen 1",
+    "Dosen Bisnis & Manajemen 2",
+    "Dosen Bisnis & Manajemen 3"
+  ],
 
-/* =====================================================
-   ELEMENT
-===================================================== */
+  "Ilmu Komunikasi": [
+    "Dosen Ilmu Komunikasi 1",
+    "Dosen Ilmu Komunikasi 2",
+    "Dosen Ilmu Komunikasi 3"
+  ],
 
-const form =
-  document.getElementById(
-    "pengajuanForm"
-  );
+  "Hukum": [
+    "Dosen Hukum 1",
+    "Dosen Hukum 2",
+    "Dosen Hukum 3"
+  ],
 
+  "Sastra Indonesia": [
+    "Dosen Sastra Indonesia 1",
+    "Dosen Sastra Indonesia 2",
+    "Dosen Sastra Indonesia 3"
+  ]
 
-const nimInput =
-  document.getElementById(
-    "nim"
-  );
-
-
-const namaInput =
-  document.getElementById(
-    "nama"
-  );
-
-
-const usernameInput =
-  document.getElementById(
-    "username"
-  );
-
-
-const prodiSelect =
-  document.getElementById(
-    "prodi"
-  );
+};
 
 
-const judulInput =
-  document.getElementById(
-    "judul"
-  );
+/* =========================================
+   4. DATA JADWAL SIDANG
+========================================= */
+
+const SLOTS = [
+  {value:"19:00-19:40",label:"19.00 – 19.40 WIB"},
+  {value:"19:40-20:20",label:"19.40 – 20.20 WIB"},
+  {value:"20:20-21:00",label:"20.20 – 21.00 WIB"},
+  {value:"21:00-21:40",label:"21.00 – 21.40 WIB"}
+];
+
+let booked = {};
+let dospemQuotaCounts = {};
+const DOSPEM_QUOTA_LIMIT = 5;
+let selectedDate = "";
+let selectedTime = "";
+
+const $ = id => document.getElementById(id);
 
 
-const rumusanInput =
-  document.getElementById(
-    "rumusan"
-  );
+/* =========================================
+   5. FUNGSI API TERPISAH
+========================================= */
 
+async function api(scriptUrl, payload = null){
 
-const topikInput =
-  document.getElementById(
-    "topik"
-  );
+  if(!scriptUrl || scriptUrl.includes("TEMPEL_URL")){
 
-
-const dosenSelect =
-  document.getElementById(
-    "dosen"
-  );
-
-
-const fileInput =
-  document.getElementById(
-    "dokumen"
-  );
-
-
-const submitBtn =
-  document.getElementById(
-    "submitBtn"
-  );
-
-
-const loading =
-  document.getElementById(
-    "loading"
-  );
-
-
-const statusBox =
-  document.getElementById(
-    "status"
-  );
-
-
-const quotaInfo =
-  document.getElementById(
-    "quotaInfo"
-  );
-
-
-const successModal =
-  document.getElementById(
-    "successModal"
-  );
-
-
-const successMessage =
-  document.getElementById(
-    "successMessage"
-  );
-
-
-const closeModalBtn =
-  document.getElementById(
-    "closeModalBtn"
-  );
-
-
-/* =====================================================
-   SAAT HALAMAN DIBUKA
-===================================================== */
-
-window.addEventListener(
-  "load",
-  function() {
-
-    loadQuota();
+    throw new Error("URL Google Apps Script belum diisi.");
 
   }
-);
 
+  const response = await fetch(scriptUrl,{
 
-/* =====================================================
-   RESET SEMUA KUOTA (LOKAL BROWSER / INSPECT ONLY)
-===================================================== */
+    method: payload ? "POST" : "GET",
 
-function resetAllQuota() {
+    headers: payload
+      ? {"Content-Type":"text/plain;charset=utf-8"}
+      : undefined,
 
-  const password =
-    prompt(
-      "Masukkan kode reset kuota:"
+    body: payload
+      ? JSON.stringify(payload)
+      : undefined,
+
+    cache:"no-store"
+
+  });
+
+  const raw = await response.text();
+
+  let data;
+
+  try{
+
+    data = JSON.parse(raw);
+
+  }catch(e){
+
+    throw new Error(
+      "Respons server tidak terbaca. Periksa URL Web App dan deployment Apps Script."
     );
 
+  }
 
-  if (
-    password !==
-    "RESETUSA2026"
-  ) {
+  if(!response.ok || data.status !== "success"){
 
-    alert(
-      "Kode reset salah."
+    throw new Error(
+      data.message || "Permintaan gagal diproses."
     );
 
+  }
+
+  return data;
+
+}
+
+
+/* =========================================
+   6. STATUS PESAN
+========================================= */
+
+function showStatus(id,message,ok=false){
+
+  const el = $(id);
+
+  el.textContent = message;
+
+  el.className = "status show" + (ok ? " ok" : "");
+
+}
+
+function clearStatus(id){
+
+  $(id).textContent = "";
+  $(id).className = "status";
+
+}
+
+
+/* =========================================
+   7. DROPDOWN PROGRAM STUDI
+========================================= */
+
+function fillJurusan(){
+
+  ["dJurusan","sJurusan"].forEach(id=>{
+
+    const select = $(id);
+
+    JURUSAN.forEach(jurusan=>{
+
+      select.add(new Option(jurusan,jurusan));
+
+    });
+
+  });
+
+}
+
+
+/* =========================================
+   8. DROPDOWN DOSEN OTOMATIS BERDASARKAN PRODI
+========================================= */
+
+function fillDosen(jurusan,selectId){
+
+  const select = $(selectId);
+  const isDospem = selectId === "dDosen";
+  const previousValue = select.value;
+
+  select.innerHTML = "";
+
+  if(!jurusan){
+    select.add(new Option("-- Pilih jurusan terlebih dahulu --",""));
+    select.disabled = true;
     return;
-
   }
 
+  const list = dosenByJurusan[jurusan] || [];
+  select.add(new Option("-- Pilih Dosen Pembimbing --",""));
 
-  // Kosongkan kuota lokal di memori browser
-  countDosenTerisi = {};
+  list.forEach(nama=>{
+    const jumlah = Number(dospemQuotaCounts[nama] || 0);
+    const penuh = isDospem && jumlah >= DOSPEM_QUOTA_LIMIT;
+    const label = isDospem ? `${nama} (${jumlah}/${DOSPEM_QUOTA_LIMIT})${penuh ? " — Kuota Penuh" : ""}` : nama;
+    const option = new Option(label,nama);
+    option.disabled = penuh;
+    select.add(option);
+  });
+
+  const tersedia = isDospem
+    ? list.some(nama => Number(dospemQuotaCounts[nama] || 0) < DOSPEM_QUOTA_LIMIT)
+    : list.length > 0;
+
+  select.disabled = !tersedia;
+
+  if(!list.length){
+    select.innerHTML = "";
+    select.add(new Option("-- Dosen belum tersedia --",""));
+    select.disabled = true;
+  }else if(isDospem && !tersedia){
+    select.options[0].text = "-- Semua dosen pada jurusan ini penuh --";
+  }
+
+  // Pertahankan pilihan hanya jika dosen tersebut masih memiliki kuota.
+  if(previousValue && list.includes(previousValue)){
+    const count = Number(dospemQuotaCounts[previousValue] || 0);
+    if(!isDospem || count < DOSPEM_QUOTA_LIMIT) select.value = previousValue;
+  }
+}
 
 
-  // Perbarui tampilan dropdown dosen dan info kuota
-  filterDosen();
+/* Memuat jumlah pendaftar per dosen dari spreadsheet dospem. */
+async function refreshDospemQuota(){
+  const data = await api(DOSPEM_SCRIPT_URL);
+  dospemQuotaCounts = data.quotas || {};
+
+  const selectedBefore = $("dDosen").value;
+  fillDosen($("dJurusan").value,"dDosen");
+
+  if(selectedBefore && Number(dospemQuotaCounts[selectedBefore] || 0) >= DOSPEM_QUOTA_LIMIT){
+    $("dDosen").value = "";
+    showStatus("dStatus","Kuota dosen yang dipilih baru saja penuh. Silakan pilih dosen lain.");
+  }
+
+  return dospemQuotaCounts;
+}
 
 
-  alert(
-    "Semua kuota berhasil di-reset secara lokal!"
-  );
+/* =========================================
+   9. FORMAT TANGGAL
+========================================= */
+
+function dayName(iso){
+
+  return new Intl.DateTimeFormat("id-ID",{
+    weekday:"long",
+    timeZone:"UTC"
+  }).format(new Date(iso+"T12:00:00Z"));
+
+}
+
+function dateLabel(iso){
+
+  return new Intl.DateTimeFormat("id-ID",{
+    day:"numeric",
+    month:"long",
+    year:"numeric",
+    timeZone:"UTC"
+  }).format(new Date(iso+"T12:00:00Z"));
 
 }
 
 
-/* =====================================================
-   AMBIL KUOTA DARI SERVER
-===================================================== */
+/* =========================================
+   10. MENAMPILKAN JADWAL SIDANG
+========================================= */
 
-function loadQuota() {
+function renderSchedule(){
 
-  fetch(
-    SCRIPT_URL +
-    "?action=quota&t=" +
-    Date.now(),
-    {
-      method: "GET",
-      cache: "no-store"
-    }
-  )
+  const jurusan = $("sJurusan").value;
 
-  .then(
-    function(response) {
+  document.querySelectorAll(".date-card").forEach(btn=>{
 
-      if (!response.ok) {
+    const taken =
+      booked[jurusan+"|"+btn.dataset.date] || [];
 
-        throw new Error(
-          "Server tidak dapat dihubungi."
-        );
+    const allFull = taken.length >= SLOTS.length;
 
-      }
+    btn.disabled = !jurusan || allFull;
 
-      return response.json();
+    btn.classList.toggle(
+      "active",
+      btn.dataset.date === selectedDate
+    );
 
-    }
-  )
+    btn.title = allFull
+      ? "Semua sesi pada jurusan ini sudah terisi"
+      : (!jurusan ? "Pilih jurusan terlebih dahulu" : "");
 
-  .then(
-    function(response) {
+  });
 
-      if (
-        response.status ===
-        "success"
-      ) {
+  $("timeGrid").innerHTML = "";
 
-        countDosenTerisi =
-          response.counts || {};
-
-      } else {
-
-        countDosenTerisi = {};
-
-      }
-
-
-      filterDosen();
-
-    }
-  )
-
-  .catch(
-    function(error) {
-
-      console.error(
-        "Gagal mengambil kuota:",
-        error
-      );
-
-
-      /*
-       * Daftar dosen tetap ditampilkan
-       * walaupun data kuota gagal diambil.
-       */
-
-      countDosenTerisi = {};
-
-      filterDosen();
-
-    }
+  $("timeArea").classList.toggle(
+    "show",
+    !!selectedDate
   );
+
+  if(!selectedDate) return;
+
+  const taken =
+    booked[jurusan+"|"+selectedDate] || [];
+
+  SLOTS.forEach(slot=>{
+
+    const btn = document.createElement("button");
+
+    btn.type = "button";
+    btn.className = "time-slot";
+    btn.textContent = slot.label;
+
+    btn.disabled = taken.includes(slot.value);
+
+    if(btn.disabled){
+      btn.title = "Jadwal sudah dipesan";
+    }
+
+    if(slot.value === selectedTime){
+      btn.classList.add("active");
+    }
+
+    btn.addEventListener("click",()=>{
+
+      selectedTime = slot.value;
+
+      $("sJadwal").value =
+        selectedDate+" | "+selectedTime;
+
+      $("selectedSchedule").textContent =
+        "Jadwal terpilih: "+
+        dayName(selectedDate)+", "+
+        dateLabel(selectedDate)+" | "+
+        slot.label;
+
+      $("selectedSchedule").classList.add("show");
+
+      renderSchedule();
+
+    });
+
+    $("timeGrid").appendChild(btn);
+
+  });
 
 }
 
 
-/* =====================================================
-   PERUBAHAN PROGRAM STUDI
-===================================================== */
+/* =========================================
+   11. MEMUAT DATA JADWAL DARI SPREADSHEET SIDANG
+========================================= */
 
-prodiSelect.addEventListener(
-  "change",
-  function() {
+async function refreshInit(){
 
-    filterDosen();
+  // Tambahkan penanda waktu agar browser/proxy tidak memakai respons jadwal yang lama.
+  const refreshUrl = SIDANG_SCRIPT_URL
+    + (SIDANG_SCRIPT_URL.includes("?") ? "&" : "?")
+    + "_refresh=" + Date.now();
 
-    clearError();
+  const data = await api(refreshUrl);
 
-  }
-);
+  // Hanya mengambil data jadwal terbaru dari Spreadsheet Sidang.
+  booked = data.booked || {};
 
-
-/* =====================================================
-   FILTER DOSEN
-===================================================== */
-
-function filterDosen() {
-
-  const prodi =
-    prodiSelect.value;
-
-
-  dosenSelect.innerHTML =
-    "";
-
-
-  quotaInfo.textContent =
-    "";
-
-
-  if (!prodi) {
-
-    dosenSelect.disabled =
-      true;
-
-
-    const option =
-      document.createElement(
-        "option"
-      );
-
-
-    option.value =
-      "";
-
-
-    option.textContent =
-      "-- Pilih Program Studi Terlebih Dahulu --";
-
-
-    dosenSelect.appendChild(
-      option
-    );
-
-
-    return;
-
-  }
-
-
-  dosenSelect.disabled =
-    false;
-
-
-  const firstOption =
-    document.createElement(
-      "option"
-    );
-
-
-  firstOption.value =
-    "";
-
-
-  firstOption.textContent =
-    "-- Pilih Dosen Pembimbing --";
-
-
-  dosenSelect.appendChild(
-    firstOption
+  fillDosen(
+    $("sJurusan").value,
+    "sDosen"
   );
 
-
-  const filtered =
-    masterDosen.filter(
-      function(dosen) {
-
-        return (
-          dosen.prodi ===
-          prodi
-        );
-
-      }
-    );
-
-
-  filtered.forEach(
-    function(dosen) {
-
-      const terisi =
-        Number(
-          countDosenTerisi[
-            dosen.nama
-          ] || 0
-        );
-
-
-      const option =
-        document.createElement(
-          "option"
-        );
-
-
-      option.value =
-        dosen.nama;
-
-
-      option.textContent =
-        dosen.nama +
-        " (" +
-        terisi +
-        "/" +
-        MAX_KUOTA +
-        ")";
-
-
-      if (
-        terisi >=
-        MAX_KUOTA
-      ) {
-
-        option.textContent +=
-          " - KUOTA PENUH";
-
-
-        option.disabled =
-          true;
-
-      }
-
-
-      dosenSelect.appendChild(
-        option
-      );
-
-    }
-  );
+  renderSchedule();
 
 }
 
 
-/* =====================================================
-   PILIH DOSEN
-===================================================== */
+/* =========================================
+   12. RESET JADWAL
+========================================= */
 
-dosenSelect.addEventListener(
-  "change",
-  function() {
+function resetSchedule(){
 
-    updateQuotaInfo();
+  selectedDate = "";
+  selectedTime = "";
 
-    clearError();
+  $("sJadwal").value = "";
 
-  }
-);
+  $("selectedSchedule").classList.remove("show");
 
+  $("selectedSchedule").textContent = "";
 
-/* =====================================================
-   INFORMASI KUOTA
-===================================================== */
+  $("timeArea").classList.remove("show");
 
-function updateQuotaInfo() {
-
-  const dosen =
-    dosenSelect.value;
-
-
-  if (!dosen) {
-
-    quotaInfo.textContent =
-      "";
-
-    return;
-
-  }
-
-
-  const terisi =
-    Number(
-      countDosenTerisi[
-        dosen
-      ] || 0
-    );
-
-
-  const sisa =
-    Math.max(
-      0,
-      MAX_KUOTA - terisi
-    );
-
-
-  quotaInfo.textContent =
-    "Sisa kuota: " +
-    sisa +
-    " dari " +
-    MAX_KUOTA +
-    ".";
+  renderSchedule();
 
 }
 
 
-/* =====================================================
-   VALIDASI FILE
-===================================================== */
+/* =========================================
+   13. INISIALISASI
+========================================= */
 
-fileInput.addEventListener(
-  "change",
-  function() {
-
-    clearError();
+fillJurusan();
 
 
-    const file =
-      fileInput.files[0];
+/* NAVIGASI TAB */
 
+document.querySelectorAll(".portal-tab").forEach(tab=>{
 
-    if (!file) {
+  tab.addEventListener("click",()=>{
 
-      return;
+    document.querySelectorAll(".portal-tab").forEach(t=>{
 
+      t.classList.toggle("active",t === tab);
+
+    });
+
+    document.querySelectorAll(".panel").forEach(panel=>{
+
+      panel.hidden = panel.id !== tab.dataset.panel;
+
+    });
+
+    if(tab.dataset.panel === "sidangPanel"){
+      refreshInit().catch(err=>{
+        showStatus("sStatus","Gagal memperbarui jadwal dari Spreadsheet Sidang: "+err.message);
+      });
     }
 
+  });
 
-    /* CEK UKURAN */
-
-    if (
-      file.size >
-      MAX_FILE_SIZE
-    ) {
-
-      fileInput.value =
-        "";
+});
 
 
-      showError(
-        "Ukuran file terlalu besar. Maksimal 5 MB."
-      );
+/* =========================================
+   14. EVENT DROPDOWN DOSEN PEMBIMBING
+========================================= */
+
+$("dJurusan").addEventListener("change",()=>{
+  fillDosen($("dJurusan").value,"dDosen");
+  clearStatus("dStatus");
+});
 
 
-      return;
+/* =========================================
+   15. EVENT DROPDOWN PENDAFTARAN SIDANG
+========================================= */
 
+$("sJurusan").addEventListener("change",()=>{
+
+  fillDosen(
+    $("sJurusan").value,
+    "sDosen"
+  );
+
+  resetSchedule();
+
+  clearStatus("sStatus");
+
+  refreshInit().catch(e=>{
+
+    showStatus("sStatus",e.message);
+
+  });
+
+});
+
+
+/* =========================================
+   16. PERBARUI KETERSEDIAAN JADWAL
+========================================= */
+
+$("refreshScheduleBtn").addEventListener("click", async ()=>{
+
+  const button = $("refreshScheduleBtn");
+  button.disabled = true;
+  button.textContent = "Memperbarui jadwal...";
+
+  try{
+    await refreshInit();
+    clearStatus("sStatus");
+    showStatus("sStatus","Ketersediaan jadwal berhasil diperbarui dari Spreadsheet.",true);
+  }catch(err){
+    showStatus("sStatus","Jadwal gagal diperbarui: "+err.message);
+  }finally{
+    button.disabled = false;
+    button.textContent = "↻ Perbarui Ketersediaan Jadwal";
+  }
+
+});
+
+
+/* =========================================
+   17. PILIH TANGGAL SIDANG
+========================================= */
+
+document.querySelectorAll(".date-card").forEach(btn=>{
+
+  btn.addEventListener("click",()=>{
+
+    selectedDate = btn.dataset.date;
+
+    selectedTime = "";
+
+    $("sJadwal").value = "";
+
+    $("selectedSchedule").classList.remove("show");
+
+    $("selectedSchedule").textContent = "";
+
+    renderSchedule();
+
+  });
+
+});
+
+
+/* =========================================
+   17. SUBMIT PENDAFTARAN DOSEN PEMBIMBING
+   Menggunakan DOSPEM_SCRIPT_URL
+========================================= */
+
+$("dospemForm").addEventListener("submit",async e=>{
+
+  e.preventDefault();
+
+  clearStatus("dStatus");
+
+  const jurusan = $("dJurusan").value;
+  const dosen = $("dDosen").value;
+
+  // Ambil kuota terbaru sebelum memproses pendaftaran.
+  try{
+    await refreshDospemQuota();
+  }catch(quotaError){
+    return showStatus("dStatus","Kuota dosen belum dapat diverifikasi. Coba beberapa saat lagi.");
+  }
+
+  if(!dosen || Number(dospemQuotaCounts[dosen] || 0) >= DOSPEM_QUOTA_LIMIT){
+    return showStatus("dStatus","Kuota dosen tersebut sudah penuh. Silakan pilih dosen lain.");
+  }
+
+  // Validasi dosen sesuai program studi.
+  if(!dosenByJurusan[jurusan]?.includes(dosen)){
+
+    return showStatus(
+      "dStatus",
+      "Pilih dosen yang sesuai dengan program studi."
+    );
+
+  }
+
+  const button = $("dSubmit");
+
+  button.disabled = true;
+  button.textContent = "Mengirim...";
+
+  try{
+
+    const result = await api(DOSPEM_SCRIPT_URL,{
+
+      action:"dospem",
+
+      nim:$("dNim").value.trim(),
+
+      nama:$("dNama").value.trim(),
+
+      jurusan:jurusan,
+
+      topik:$("dTopik").value.trim(),
+
+      dosen:dosen
+
+    });
+
+    $("successMessage").textContent = result.message;
+
+    $("successModal").classList.add("show");
+
+    e.target.reset();
+    fillDosen("", "dDosen");
+    try {
+      await refreshDospemQuota();
+      fillDosen("", "dDosen");
+    } catch (refreshError) {
+      console.warn("Kuota belum berhasil diperbarui:", refreshError);
     }
 
+  }catch(err){
 
-    /* CEK EKSTENSI */
+    showStatus("dStatus",err.message);
 
-    const fileName =
-      file.name.toLowerCase();
+  }finally{
 
+    button.disabled = false;
 
-    const allowedExtensions = [
+    button.textContent = "Kirim Pendaftaran";
 
-      ".pdf",
+  }
 
-      ".doc",
-
-      ".docx"
-
-    ];
+});
 
 
-    const validExtension =
-      allowedExtensions.some(
-        function(extension) {
+/* =========================================
+   18. SUBMIT PENDAFTARAN SIDANG
+   Menggunakan SIDANG_SCRIPT_URL
+========================================= */
 
-          return fileName.endsWith(
-            extension
-          );
+$("sidangForm").addEventListener("submit",async e=>{
 
+  e.preventDefault();
+
+  clearStatus("sStatus");
+
+  const jurusan = $("sJurusan").value;
+  const dosen = $("sDosen").value;
+
+  // Validasi dosen sesuai program studi.
+  if(!dosenByJurusan[jurusan]?.includes(dosen)){
+
+    return showStatus(
+      "sStatus",
+      "Pilih dosen yang sesuai dengan program studi."
+    );
+
+  }
+
+  if(!$("sJadwal").value){
+
+    return showStatus(
+      "sStatus",
+      "Pilih hari dan jam sidang terlebih dahulu."
+    );
+
+  }
+
+  const file = $("sFile").files[0];
+
+  if(!file){
+
+    return showStatus(
+      "sStatus",
+      "Unggah berkas Tugas Akhir dalam format PDF."
+    );
+
+  }
+
+  if(file.size > 10*1024*1024){
+
+    return showStatus(
+      "sStatus",
+      "Ukuran berkas maksimal 10 MB."
+    );
+
+  }
+
+  if(
+    file.type !== "application/pdf" &&
+    !file.name.toLowerCase().endsWith(".pdf")
+  ){
+
+    return showStatus(
+      "sStatus",
+      "Berkas harus berformat PDF."
+    );
+
+  }
+
+  const button = $("sSubmit");
+
+  button.disabled = true;
+  button.textContent = "Mengunggah berkas...";
+
+  try{
+
+    const base64 = await new Promise((resolve,reject)=>{
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (typeof reader.result !== "string") {
+          reject(new Error("Berkas tidak dapat dibaca."));
+          return;
         }
-      );
-
-
-    if (
-      !validExtension
-    ) {
-
-      fileInput.value =
-        "";
-
-
-      showError(
-        "File hanya boleh PDF, DOC, atau DOCX."
-      );
-
-
-      return;
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   SUBMIT FORM
-===================================================== */
-
-form.addEventListener(
-  "submit",
-  function(event) {
-
-    event.preventDefault();
-
-
-    if (isSubmitting) {
-
-      return;
-
-    }
-
-
-    clearError();
-
-
-    /* VALIDASI HTML */
-
-    if (
-      !form.checkValidity()
-    ) {
-
-      form.reportValidity();
-
-      return;
-
-    }
-
-
-    const file =
-      fileInput.files[0];
-
-
-    if (!file) {
-
-      showError(
-        "Silakan pilih dokumen pengajuan."
-      );
-
-      return;
-
-    }
-
-
-    if (
-      file.size >
-      MAX_FILE_SIZE
-    ) {
-
-      showError(
-        "Ukuran file maksimal 5 MB."
-      );
-
-      return;
-
-    }
-
-
-    if (
-      !prodiSelect.value
-    ) {
-
-      showError(
-        "Silakan pilih Program Studi."
-      );
-
-      return;
-
-    }
-
-
-    if (
-      !dosenSelect.value
-    ) {
-
-      showError(
-        "Silakan pilih Dosen Pembimbing."
-      );
-
-      return;
-
-    }
-
-
-    /* MULAI PROSES */
-
-    isSubmitting =
-      true;
-
-
-    setFormDisabled(
-      true
-    );
-
-
-    loading.style.display =
-      "block";
-
-
-    loading.textContent =
-      "Membaca dokumen...";
-
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload =
-      function() {
-
-        loading.textContent =
-          "Mengirim data dan dokumen...";
-
-
-        const payload = {
-
-          nim:
-            nimInput.value.trim(),
-
-          nama:
-            namaInput.value.trim(),
-
-          username:
-            usernameInput.value.trim(),
-
-          prodi:
-            prodiSelect.value,
-
-          judul:
-            judulInput.value.trim(),
-
-          rumusan:
-            rumusanInput.value.trim(),
-
-          topik:
-            topikInput.value.trim(),
-
-          dosen:
-            dosenSelect.value,
-
-          fileName:
-            file.name,
-
-          fileType:
-            file.type,
-
-          fileBase64:
-            reader.result
-
-        };
-
-
-        sendData(
-          payload
-        );
-
+        // Tetap kirim Data URL agar kompatibel dengan Code.gs SIDANG yang sekarang.
+        resolve(reader.result);
       };
 
-
-    reader.onerror =
-      function() {
-
-        finishSubmit();
-
-
-        showError(
-          "Dokumen gagal dibaca oleh browser."
-        );
-
-      };
-
-
-    reader.readAsDataURL(
-      file
-    );
-
-  }
-);
-
-
-/* =====================================================
-   KIRIM KE APPS SCRIPT
-===================================================== */
-
-function sendData(
-  payload
-) {
-
-  fetch(
-    SCRIPT_URL,
-    {
-
-      method:
-        "POST",
-
-      headers: {
-
-        /*
-         * text/plain membantu menghindari
-         * preflight request tertentu.
-         */
-
-        "Content-Type":
-          "text/plain;charset=utf-8"
-
-      },
-
-      body:
-        JSON.stringify(
-          payload
-        )
-
-    }
-  )
-
-  .then(
-    function(response) {
-
-      if (!response.ok) {
-
-        throw new Error(
-          "Server mengembalikan HTTP " +
-          response.status
-        );
-
-      }
-
-
-      return response.text();
-
-    }
-  )
-
-  .then(
-    function(text) {
-
-      let response;
-
-
-      try {
-
-        response =
-          JSON.parse(
-            text
-          );
-
-      } catch (error) {
-
-        console.error(
-          "Response server:",
-          text
-        );
-
-
-        throw new Error(
-          "Response dari server tidak valid."
-        );
-
-      }
-
-
-      if (
-        response.status !==
-        "success"
-      ) {
-
-        throw new Error(
-          response.message ||
-          "Pengajuan tidak berhasil."
-        );
-
-      }
-
-
-      /* ==========================================
-         BERHASIL
-      ========================================== */
-
-      let message =
-        response.message ||
-        "Pengajuan dosen pembimbing berhasil dikirim!";
-
-
-      if (
-        response.dosen
-      ) {
-
-        message +=
-          " Dosen: " +
-          response.dosen +
-          ".";
-
-      }
-
-
-      if (
-        typeof response.sisa !==
-        "undefined"
-      ) {
-
-        message +=
-          " Sisa kuota: " +
-          response.sisa +
-          ".";
-
-      }
-
-
-      showSuccessModal(
-        message
+      reader.onerror = () => reject(
+        new Error("Berkas gagal dibaca.")
       );
 
+      reader.readAsDataURL(file);
 
-      /*
-       * Kosongkan form setelah berhasil.
-       */
+    });
 
-      form.reset();
+    button.textContent = "Mengirim dan menyimpan PDF...";
+    showStatus("sStatus", "PDF berhasil dibaca. Sedang mengirim data dan menyimpan berkas ke Drive.");
 
+    const result = await api(SIDANG_SCRIPT_URL,{
 
-      dosenSelect.innerHTML =
-        '<option value="">-- Pilih Program Studi Terlebih Dahulu --</option>';
+      action:"sidang",
 
+      nim:$("sNim").value.trim(),
 
-      dosenSelect.disabled =
-        true;
+      nama:$("sNama").value.trim(),
 
+      jurusan:jurusan,
 
-      quotaInfo.textContent =
-        "";
+      judul:$("sJudul").value.trim(),
 
+      dosen:dosen,
 
-      /*
-       * Ambil kuota terbaru.
-       */
+      jadwal:$("sJadwal").value,
 
-      loadQuota();
+      tanggal:selectedDate,
 
-    }
-  )
+      jam:selectedTime,
 
-  .catch(
-    function(error) {
+      fileName:file.name,
 
-      console.error(
-        "Submit error:",
-        error
-      );
+      fileType:"application/pdf",
 
+      fileBase64:base64
 
-      showError(
-        error.message ||
-        "Terjadi kesalahan saat mengirim pengajuan."
-      );
+    });
 
-    }
-  )
+    $("successMessage").textContent = result.message;
 
-  .finally(
-    function() {
+    $("successModal").classList.add("show");
 
-      finishSubmit();
+    e.target.reset();
 
-    }
-  );
+    fillDosen("","sDosen");
 
-}
+    resetSchedule();
 
+    await refreshInit().catch(err => console.warn("Jadwal belum berhasil diperbarui:", err));
 
-/* =====================================================
-   POPUP SUKSES
-===================================================== */
+  }catch(err){
 
-function showSuccessModal(
-  message
-) {
+    showStatus("sStatus",err.message);
 
-  successMessage.textContent =
-    message;
+  }finally{
 
+    button.disabled = false;
 
-  successModal.classList.add(
-    "show"
-  );
-
-}
-
-
-/* =====================================================
-   TUTUP POPUP
-===================================================== */
-
-function closeSuccessModal() {
-
-  successModal.classList.remove(
-    "show"
-  );
-
-}
-
-
-closeModalBtn.addEventListener(
-  "click",
-  closeSuccessModal
-);
-
-
-/* =====================================================
-   KLIK AREA GELAP UNTUK MENUTUP POPUP
-===================================================== */
-
-successModal.addEventListener(
-  "click",
-  function(event) {
-
-    if (
-      event.target ===
-      successModal
-    ) {
-
-      closeSuccessModal();
-
-    }
+    button.textContent = "Kirim Pendaftaran Sidang";
 
   }
-);
+
+});
 
 
-/* =====================================================
-   ESC UNTUK MENUTUP POPUP
-===================================================== */
+/* =========================================
+   19. MODAL BERHASIL
+========================================= */
 
-document.addEventListener(
-  "keydown",
-  function(event) {
+$("closeModal").addEventListener("click",()=>{
 
-    if (
-      event.key ===
-      "Escape"
-    ) {
+  $("successModal").classList.remove("show");
 
-      closeSuccessModal();
+});
 
-    }
+$("successModal").addEventListener("click",e=>{
 
-  }
-);
+  if(e.target === $("successModal")){
 
-
-/* =====================================================
-   ERROR
-===================================================== */
-
-function showError(
-  message
-) {
-
-  statusBox.className =
-    "error";
-
-
-  statusBox.textContent =
-    message;
-
-
-  statusBox.style.display =
-    "block";
-
-
-  statusBox.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-
-}
-
-
-/* =====================================================
-   HAPUS ERROR
-===================================================== */
-
-function clearError() {
-
-  statusBox.className =
-    "";
-
-  statusBox.textContent =
-    "";
-
-  statusBox.style.display =
-    "none";
-
-}
-
-
-/* =====================================================
-   DISABLE FORM
-===================================================== */
-
-function setFormDisabled(
-  disabled
-) {
-
-  const elements =
-    form.querySelectorAll(
-      "input, select, textarea, button"
-    );
-
-
-  elements.forEach(
-    function(element) {
-
-      element.disabled =
-        disabled;
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   SELESAI SUBMIT
-===================================================== */
-
-function finishSubmit() {
-
-  isSubmitting =
-    false;
-
-
-  setFormDisabled(
-    false
-  );
-
-
-  /*
-   * Setelah selesai, dropdown dosen harus
-   * mengikuti kondisi program studi.
-   */
-
-  if (
-    prodiSelect.value
-  ) {
-
-    dosenSelect.disabled =
-      false;
-
-  } else {
-
-    dosenSelect.disabled =
-      true;
+    $("successModal").classList.remove("show");
 
   }
 
-
-  loading.style.display =
-    "none";
-
-}
-
-
-
-/* MENU PORTAL: hanya Usulan Dospem dan Pendaftaran Sidang */
-document.querySelectorAll('.portal-tab').forEach(function(tab){
-  tab.addEventListener('click',function(){
-    document.querySelectorAll('.portal-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.portal-panel').forEach(p=>p.hidden=true);
-    tab.classList.add('active');document.getElementById(tab.dataset.panel).hidden=false;
-  });
 });
 
-/* PILIH TANGGAL, KEMUDIAN PILIH JAM DENGAN TOMBOL */
-let selectedDate='';
-const scheduleInput=document.getElementById('sidangJadwal');
-const timeArea=document.getElementById('timeArea');
-const selectedSchedule=document.getElementById('selectedSchedule');
-document.querySelectorAll('.date-card').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    selectedDate=btn.dataset.date;scheduleInput.value='';
-    document.querySelectorAll('.date-card').forEach(b=>b.classList.toggle('active',b===btn));
-    document.querySelectorAll('.time-slot').forEach(b=>b.classList.remove('active'));
-    selectedSchedule.classList.remove('show');timeArea.classList.add('show');
-  });
-});
-document.querySelectorAll('.time-slot').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    document.querySelectorAll('.time-slot').forEach(b=>b.classList.toggle('active',b===btn));
-    scheduleInput.value=selectedDate+' | '+btn.dataset.time;
-    selectedSchedule.textContent='Jadwal terpilih: '+scheduleInput.value;
-    selectedSchedule.classList.add('show');
-  });
+
+/* =========================================
+   20. LOAD DATA AWAL
+   Mengambil jadwal dari Spreadsheet Sidang.
+========================================= */
+
+refreshDospemQuota().catch(err=>{
+  showStatus("dStatus","Gagal memuat kuota dosen: "+err.message);
 });
 
-/* FORM SIDANG: kirim ke endpoint Apps Script yang sama */
-const sidangForm=document.getElementById('sidangForm');
-const sidangFile=document.getElementById('sidangFile');
-const sidangStatus=document.getElementById('sidangStatus');
-const sidangLoading=document.getElementById('sidangLoading');
-const sidangSubmitBtn=document.getElementById('sidangSubmitBtn');
-sidangForm.addEventListener('submit',function(event){
-  event.preventDefault();sidangStatus.className='';sidangStatus.textContent='';
-  if(!sidangForm.reportValidity())return;
-  if(!scheduleInput.value)return showSidangError('Pilih tanggal dan jam sidang terlebih dahulu.');
-  const file=sidangFile.files[0];
-  if(!file)return showSidangError('Silakan unggah berkas Tugas Akhir.');
-  if(file.size>10*1024*1024)return showSidangError('Ukuran PDF maksimal 10 MB.');
-  if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf'))return showSidangError('Berkas harus berformat PDF.');
-  sidangSubmitBtn.disabled=true;sidangLoading.style.display='block';sidangLoading.textContent='Membaca berkas PDF...';
-  const reader=new FileReader();
-  reader.onload=function(){
-    const payload={jenis:'pendaftaran_sidang',nama:document.getElementById('sidangNama').value.trim(),nim:document.getElementById('sidangNim').value.trim(),jurusan:document.getElementById('sidangJurusan').value,judul:document.getElementById('sidangJudul').value.trim(),pembimbing:document.getElementById('sidangPembimbing').value.trim(),jadwal:scheduleInput.value,fileName:file.name,fileType:file.type||'application/pdf',fileBase64:reader.result};
-    sidangLoading.textContent='Mengirim data ke Google Spreadsheet...';
-    fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
-    .then(r=>{if(!r.ok)throw new Error('Server HTTP '+r.status);return r.text();})
-    .then(raw=>{let result;try{result=JSON.parse(raw)}catch(e){throw new Error('Respons server tidak valid. Apps Script perlu ditambahkan handler pendaftaran sidang.')}if(result.status!=='success')throw new Error(result.message||'Pendaftaran gagal disimpan.');alert(result.message||'Pendaftaran sidang berhasil disimpan ke spreadsheet.');sidangForm.reset();selectedDate='';scheduleInput.value='';document.querySelectorAll('.date-card,.time-slot').forEach(b=>b.classList.remove('active'));timeArea.classList.remove('show');selectedSchedule.classList.remove('show');})
-    .catch(e=>showSidangError(e.message))
-    .finally(()=>{sidangSubmitBtn.disabled=false;sidangLoading.style.display='none';});
-  };
-  reader.onerror=function(){showSidangError('Berkas gagal dibaca browser.');sidangSubmitBtn.disabled=false;sidangLoading.style.display='none';};
-  reader.readAsDataURL(file);
+refreshInit().catch(err=>{
+
+  showStatus(
+    "dStatus",
+    "Pendaftaran siap digunakan, tetapi data jadwal gagal dimuat: "+err.message
+  );
+
+  showStatus(
+    "sStatus",
+    "Gagal memuat jadwal dari Spreadsheet Sidang: "+err.message
+  );
+
 });
-function showSidangError(message){sidangStatus.textContent=message;sidangStatus.className='error';}
 
 </script>
 
-
 </body>
-
 </html>
