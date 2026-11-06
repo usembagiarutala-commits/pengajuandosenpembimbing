@@ -620,10 +620,6 @@ select option:disabled{color:#A49A90}
         <select id="dDosen" required disabled>
           <option value="">-- Pilih jurusan terlebih dahulu --</option>
         </select>
-        <div class="quota-note" id="dQuotaNote">
-          Kuota setiap dosen maksimal <strong>5 mahasiswa</strong>. Pilihan dan jumlah kuota diperbarui otomatis.
-        </div>
-        <div class="hint">Dosen dengan kuota penuh (5/5) tidak dapat dipilih.</div>
       </div>
 
       <button class="primary-btn" id="dSubmit" type="submit">
@@ -673,12 +669,6 @@ select option:disabled{color:#A49A90}
       <div class="form-group">
 
         <label>Pilihan Hari dan Jam Sidang *</label>
-
-        <div class="schedule-help">
-          Pilih jurusan terlebih dahulu untuk melihat ketersediaan jadwal.
-          Setiap sesi berdurasi 40 menit, dimulai pukul 19.00 WIB.
-          Slot yang sudah dipesan pada jurusan dan tanggal yang sama akan dinonaktifkan.
-        </div>
 
         <button type="button" class="refresh-schedule-btn" id="refreshScheduleBtn">
           ↻ Perbarui Ketersediaan Jadwal
@@ -779,10 +769,12 @@ select option:disabled{color:#A49A90}
 ========================================= */
 
 // Spreadsheet Pendaftaran Dosen Pembimbing
-const DOSPEM_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpWXf_g0-sR2puUVXyH3WjFBTkH_vlCEkffTM83Dhl_uM3Ze4X4JPSKJ1qtSHYVsJ_/exechttps://script.google.com/macros/s/AKfycbzpWXf_g0-sR2puUVXyH3WjFBTkH_vlCEkffTM83Dhl_uM3Ze4X4JPSKJ1qtSHYVsJ_/exec";
+const DOSPEM_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwagAXDGBtH_Al3_SmjbSU4W-iXciyt9ZCMH3d1BEfNzAoW6mu3ISGMtiNaW6524zrR/exec";
 
 // Spreadsheet Pendaftaran Sidang
-const SIDANG_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2YBbGjcTQE-wv5cuhPZrVytce0565OvuV8EZ-Wvyn-2vPUb7bGQQl-y9mlZF3GzAGww/exechttps://script.google.com/macros/s/AKfycbxcZ5J2sPB1RO-Jk2MG_r8dsoUwNvaUkUxXSBJDNjibO_NIgO-IT1iYSMsepJxVFqDmZA/exec";
+// WAJIB diganti dengan SATU URL deployment Web App SIDANG yang aktif.
+// Jangan gabungkan dua URL. Format harus berakhir tepat dengan /exec.
+const SIDANG_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbc4nSYX964eAqw1qDzzlo5tdYIGhC7FaXSslgfBhdcSo0t2QWZtFRC4lPfAhw20GZYw/exec";
 
 
 /* =========================================
@@ -865,53 +857,49 @@ const $ = id => document.getElementById(id);
 async function api(scriptUrl, payload = null){
 
   if(!scriptUrl || scriptUrl.includes("TEMPEL_URL")){
-
-    throw new Error("URL Google Apps Script belum diisi.");
-
+    throw new Error("URL Google Apps Script belum dikonfigurasi. Periksa URL deployment Web App.");
   }
 
-  const response = await fetch(scriptUrl,{
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 60000);
 
-    method: payload ? "POST" : "GET",
+  try {
+    const response = await fetch(scriptUrl,{
+      method: payload ? "POST" : "GET",
+      headers: payload
+        ? {"Content-Type":"text/plain;charset=utf-8"}
+        : undefined,
+      body: payload ? JSON.stringify(payload) : undefined,
+      cache:"no-store",
+      signal:controller.signal
+    });
 
-    headers: payload
-      ? {"Content-Type":"text/plain;charset=utf-8"}
-      : undefined,
+    const raw = await response.text();
+    let data;
 
-    body: payload
-      ? JSON.stringify(payload)
-      : undefined,
+    try {
+      data = JSON.parse(raw);
+    } catch(e) {
+      throw new Error("Respons server tidak terbaca. Periksa URL deployment, akses Web App, dan versi deployment.");
+    }
 
-    cache:"no-store"
+    if(!response.ok || data.status !== "success"){
+      throw new Error(data.message || "Permintaan gagal diproses.");
+    }
 
-  });
+    return data;
 
-  const raw = await response.text();
-
-  let data;
-
-  try{
-
-    data = JSON.parse(raw);
-
-  }catch(e){
-
-    throw new Error(
-      "Respons server tidak terbaca. Periksa URL Web App dan deployment Apps Script."
-    );
-
+  } catch(err) {
+    if(err.name === "AbortError"){
+      throw new Error("Permintaan melewati batas waktu 60 detik. Periksa koneksi atau proses Google Apps Script.");
+    }
+    if(err instanceof TypeError){
+      throw new Error("Gagal terhubung ke Google Apps Script (Failed to fetch). Periksa URL /exec, deployment aktif, dan izin akses Anyone.");
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  if(!response.ok || data.status !== "success"){
-
-    throw new Error(
-      data.message || "Permintaan gagal diproses."
-    );
-
-  }
-
-  return data;
-
 }
 
 
@@ -1209,11 +1197,8 @@ document.querySelectorAll(".portal-tab").forEach(tab=>{
 
     });
 
-    if(tab.dataset.panel === "sidangPanel"){
-      refreshInit().catch(err=>{
-        showStatus("sStatus","Gagal memperbarui jadwal dari Spreadsheet Sidang: "+err.message);
-      });
-    }
+    // Jadwal sudah dimuat sekali saat halaman dibuka.
+    // Gunakan tombol "Perbarui Ketersediaan Jadwal" jika perlu mengambil data terbaru.
 
   });
 
@@ -1245,11 +1230,8 @@ $("sJurusan").addEventListener("change",()=>{
 
   clearStatus("sStatus");
 
-  refreshInit().catch(e=>{
-
-    showStatus("sStatus",e.message);
-
-  });
+  // Cukup render menggunakan data jadwal yang sudah dimuat.
+  renderSchedule();
 
 });
 
@@ -1317,15 +1299,8 @@ $("dospemForm").addEventListener("submit",async e=>{
   const jurusan = $("dJurusan").value;
   const dosen = $("dDosen").value;
 
-  // Ambil kuota terbaru sebelum memproses pendaftaran.
-  try{
-    await refreshDospemQuota();
-  }catch(quotaError){
-    return showStatus("dStatus","Kuota dosen belum dapat diverifikasi. Coba beberapa saat lagi.");
-  }
-
-  if(!dosen || Number(dospemQuotaCounts[dosen] || 0) >= DOSPEM_QUOTA_LIMIT){
-    return showStatus("dStatus","Kuota dosen tersebut sudah penuh. Silakan pilih dosen lain.");
+  if(!dosen){
+    return showStatus("dStatus","Pilih dosen pembimbing terlebih dahulu.");
   }
 
   // Validasi dosen sesuai program studi.
@@ -1366,13 +1341,10 @@ $("dospemForm").addEventListener("submit",async e=>{
     $("successModal").classList.add("show");
 
     e.target.reset();
+
+    // Gunakan kuota terbaru dari respons POST; tidak perlu GET tambahan.
+    if(result.quotas) dospemQuotaCounts = result.quotas;
     fillDosen("", "dDosen");
-    try {
-      await refreshDospemQuota();
-      fillDosen("", "dDosen");
-    } catch (refreshError) {
-      console.warn("Kuota belum berhasil diperbarui:", refreshError);
-    }
 
   }catch(err){
 
@@ -1523,7 +1495,9 @@ $("sidangForm").addEventListener("submit",async e=>{
 
     resetSchedule();
 
-    await refreshInit().catch(err => console.warn("Jadwal belum berhasil diperbarui:", err));
+    // Gunakan jadwal terbaru dari respons POST; tidak perlu GET tambahan.
+    if(result.booked) booked = result.booked;
+    renderSchedule();
 
   }catch(err){
 
@@ -1571,17 +1545,7 @@ refreshDospemQuota().catch(err=>{
 });
 
 refreshInit().catch(err=>{
-
-  showStatus(
-    "dStatus",
-    "Pendaftaran siap digunakan, tetapi data jadwal gagal dimuat: "+err.message
-  );
-
-  showStatus(
-    "sStatus",
-    "Gagal memuat jadwal dari Spreadsheet Sidang: "+err.message
-  );
-
+  showStatus("sStatus","Gagal memuat jadwal sidang: "+err.message);
 });
 
 </script>
